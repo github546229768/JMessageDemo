@@ -17,7 +17,7 @@ class MyApplication : Application() {
     override fun onCreate() {
         super.onCreate()
         Utils.init(this)
-        JMessageClient.setDebugMode(true);
-        JMessageClient.init(this,)
+        JMessageClient.setDebugMode(true)
+        JMessageClient.init(this)
     }
 }
