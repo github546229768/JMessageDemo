@@ -13,7 +13,10 @@
     <option name="autoReloadType" value="NONE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4c1ebf17-df8c-4509-8d91-dc796e3a7c7c" name="Default Changelist" comment="" />
+    <list default="true" id="4c1ebf17-df8c-4509-8d91-dc796e3a7c7c" name="Default Changelist" comment="第一次提交">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/rl/jmessagedemo/constant/Variable.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/rl/jmessagedemo/constant/Variable.kt" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -84,6 +87,7 @@
     <property name="DeviceAndSnapshotComboBoxAction.selectionTime" value="2021-08-03T10:35:52.368Z" />
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="add_unversioned_files" value="true" />
     <property name="android.sdk.path" value="D:/Android_Sdk" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/app/src/main/res/layout" />
     <property name="project.structure.last.edited" value="Dependencies" />
@@ -223,12 +227,24 @@
       <option name="presentableId" value="Default" />
       <updated>1627970715780</updated>
     </task>
+    <task id="LOCAL-00001" summary="第一次提交">
+      <created>1628086141212</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1628086141212</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
+    <option name="CHECK_CODE_SMELLS_BEFORE_PROJECT_COMMIT" value="false" />
+    <option name="CHECK_NEW_TODO" value="false" />
     <ignored-roots>
       <path value="$PROJECT_DIR$" />
     </ignored-roots>
+    <MESSAGE value="第一次提交" />
+    <option name="LAST_COMMIT_MESSAGE" value="第一次提交" />
   </component>
   <component name="WindowStateProjectService">
     <state x="483" y="234" key="#PSD" timestamp="1628040010178">
@@ -255,6 +271,10 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="745" y="158" width="445" height="689" key="#org.jetbrains.kotlin.idea.refactoring.move.moveDeclarations.ui.MoveKotlinTopLevelDeclarationsDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1627976519855" />
+    <state x="200" y="0" key="CommitChangelistDialog2" timestamp="1628086632328">
+      <screen x="0" y="0" width="1280" height="680" />
+    </state>
+    <state x="200" y="0" key="CommitChangelistDialog2/0.0.1280.680@0.0.1280.680" timestamp="1628086632328" />
     <state width="540" height="466" key="DebuggerActiveHint" timestamp="1628071696812">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
@@ -263,6 +283,10 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="746" y="257" key="FileChooserDialogImpl/0.0.1920.1040@0.0.1920.1040" timestamp="1628062008188" />
+    <state x="510" y="229" width="288" height="280" key="Github.ShareDialog" timestamp="1628086339473">
+      <screen x="0" y="0" width="1280" height="680" />
+    </state>
+    <state x="510" y="229" width="288" height="280" key="Github.ShareDialog/0.0.1280.680@0.0.1280.680" timestamp="1628086339473" />
     <state width="1520" height="260" key="GridCell.Tab.0.bottom" timestamp="1628072464641">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
@@ -295,15 +319,20 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state width="1520" height="282" key="GridCell.Tab.1.right/0.0.1920.1040@0.0.1920.1040" timestamp="1628071782712" />
-    <state x="157" y="0" key="SettingsEditor" timestamp="1628085999531">
+    <state x="157" y="0" key="SettingsEditor" timestamp="1628086471241">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
-    <state x="157" y="0" key="SettingsEditor/0.0.1280.680@0.0.1280.680" timestamp="1628085999531" />
+    <state x="157" y="0" key="SettingsEditor/0.0.1280.680@0.0.1280.680" timestamp="1628086471241" />
     <state x="467" y="144" key="SettingsEditor/0.0.1920.1040@0.0.1920.1040" timestamp="1628063198591" />
-    <state width="498" height="446" key="SwitcherDM" timestamp="1628071824066">
-      <screen x="0" y="0" width="1920" height="1040" />
+    <state width="498" height="582" key="SwitcherDM" timestamp="1628086416014">
+      <screen x="0" y="0" width="1280" height="680" />
     </state>
+    <state width="498" height="582" key="SwitcherDM/0.0.1280.680@0.0.1280.680" timestamp="1628086416014" />
     <state width="498" height="446" key="SwitcherDM/0.0.1920.1040@0.0.1920.1040" timestamp="1628071824066" />
+    <state x="247" y="65" key="Vcs.Push.Dialog.v2" timestamp="1628086501140">
+      <screen x="0" y="0" width="1280" height="680" />
+    </state>
+    <state x="247" y="65" key="Vcs.Push.Dialog.v2/0.0.1280.680@0.0.1280.680" timestamp="1628086501140" />
     <state x="276" y="160" width="1380" height="685" key="com.android.tools.idea.avdmanager.AvdListDialog" timestamp="1627981035408">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>

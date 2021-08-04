@@ -7,10 +7,9 @@ package com.rl.jmessagedemo.constant
  * @datetime: 2021/8/4
 
  * @desc:
-
  */
 
-const val REQUEST_CODE_ONE = 0x001
+//const val REQUEST_CODE_ONE = 0x001
 
 const val SINGLE_CHAT_TYPE  = 0x002
 
