@@ -1,13 +1,17 @@
 package com.rl.jmessagedemo.ui.activity
 
+import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.view.Menu
+import android.view.MenuItem
 import androidx.activity.viewModels
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.rl.jmessagedemo.R
 import com.rl.jmessagedemo.adapter.MessageListAdapter
+import com.rl.jmessagedemo.constant.REQUEST_CODE_TWO
 import com.rl.jmessagedemo.databinding.ActivityChatBinding
 import com.rl.jmessagedemo.viewmodel.ChatViewModel
 import kotlin.properties.Delegates
@@ -17,25 +21,20 @@ class ChatActivity : BaseActivity() {
     private val binding: ActivityChatBinding by lazy {
         DataBindingUtil.setContentView(this, R.layout.activity_chat)
     }
-
     private val viewModel: ChatViewModel by viewModels()
-
     private val mAdapter by lazy { MessageListAdapter() }
-
     lateinit var username: String //聊天key
-
-    private var type by Delegates.notNull<Int>()
+    private var type by Delegates.notNull<Int>() ///聊天类型
 
     override fun onSupportNavigateUp(): Boolean {
         finish()
         return super.onSupportNavigateUp()
     }
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         initView()
-        viewModel.fetchData(username,type)
+        viewModel.fetchData(username, type)
         viewModel.allMessageLiveData.observe(this) {
             mAdapter.submitList(it)
             scrollToBottom()
@@ -45,10 +44,27 @@ class ChatActivity : BaseActivity() {
         }
     }
 
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.chat_menu, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if (item.itemId == R.id.add) {
+            Intent(this@ChatActivity, ChatDetailActivity::class.java).apply {
+                putExtra("type", type)
+                putExtra("username", username)
+                startActivityForResult(this, REQUEST_CODE_TWO)
+            }
+        }
+        return super.onOptionsItemSelected(item)
+    }
+
     private fun initView() {
         username = intent.getStringExtra("username").toString()
         title = intent.getStringExtra("title").toString()
-        type = intent.getIntExtra("type",0)
+        type = intent.getIntExtra("type", 0)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         with(binding) {
             recycleview.apply {

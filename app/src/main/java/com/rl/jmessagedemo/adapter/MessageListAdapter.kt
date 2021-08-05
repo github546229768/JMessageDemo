@@ -15,7 +15,7 @@ import cn.jpush.im.android.api.content.TextContent
 import cn.jpush.im.android.api.enums.ContentType
 import cn.jpush.im.android.api.enums.MessageDirect
 import cn.jpush.im.android.api.model.Message
-import com.example.gallerydemo.databinding.DataBindingListAdapter
+import com.rl.jmessagedemo.databinding.DataBindingListAdapter
 import com.rl.jmessagedemo.R
 import com.rl.jmessagedemo.databinding.DataBindingViewHolder
 import java.text.SimpleDateFormat

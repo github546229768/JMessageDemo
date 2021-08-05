@@ -2,7 +2,7 @@ package com.rl.jmessagedemo.adapter
 
 import android.annotation.SuppressLint
 import androidx.recyclerview.widget.DiffUtil
-import com.example.gallerydemo.databinding.DataBindingListAdapter
+import com.rl.jmessagedemo.databinding.DataBindingListAdapter
 import com.rl.jmessagedemo.R
 import com.rl.jmessagedemo.databinding.DataBindingViewHolder
 import com.rl.jmessagedemo.emp.NewGroupBean

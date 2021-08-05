@@ -8,9 +8,9 @@ import cn.jpush.im.android.api.model.UserInfo
 import cn.jpush.im.api.BasicCallback
 import com.blankj.utilcode.util.ActivityUtils
 import com.blankj.utilcode.util.ToastUtils
-import com.example.gallerydemo.databinding.DataBindingListAdapter
 import com.rl.jmessagedemo.R
 import com.rl.jmessagedemo.constant.SINGLE_CHAT_TYPE
+import com.rl.jmessagedemo.databinding.DataBindingListAdapter
 import com.rl.jmessagedemo.databinding.DataBindingViewHolder
 import com.rl.jmessagedemo.ui.activity.ChatActivity
 

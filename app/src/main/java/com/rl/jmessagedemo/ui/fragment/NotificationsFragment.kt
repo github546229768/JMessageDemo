@@ -27,7 +27,7 @@ class NotificationsFragment : Fragment() {
         ConversationListAdapter()
     }
 
-    var resultLauncher = registerForActivityResult(StartActivityForResult()) { result ->
+    private var resultLauncher = registerForActivityResult(StartActivityForResult()) { result ->
         if (result.resultCode == Activity.RESULT_OK) {
             viewModel.fetchData()
         }

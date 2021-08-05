@@ -1,32 +1,61 @@
 package com.rl.jmessagedemo.ui.fragment
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
+import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
+import androidx.fragment.app.viewModels
+import com.blankj.utilcode.util.ActivityUtils
+import com.blankj.utilcode.util.SPUtils
 import com.rl.jmessagedemo.R
+import com.rl.jmessagedemo.databinding.FragmentHomeBinding
+import com.rl.jmessagedemo.ui.activity.LoginActivity
+import com.rl.jmessagedemo.ui.activity.PersonInformActivity
 import com.rl.jmessagedemo.viewmodel.HomeViewModel
 
 class HomeFragment : Fragment() {
 
-    private lateinit var homeViewModel: HomeViewModel
+    private lateinit var binding: FragmentHomeBinding
+
+    private val viewModel by viewModels<HomeViewModel>()
 
     override fun onCreateView(
-            inflater: LayoutInflater,
-            container: ViewGroup?,
-            savedInstanceState: Bundle?
-    ): View? {
-        homeViewModel =
-                ViewModelProviders.of(this).get(HomeViewModel::class.java)
-        val root = inflater.inflate(R.layout.fragment_home, container, false)
-        val textView: TextView = root.findViewById(R.id.text_home)
-        homeViewModel.text.observe(viewLifecycleOwner, Observer {
-            textView.text = "用户：$it"
-        })
-        return root
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+        binding = DataBindingUtil.inflate(
+            layoutInflater,
+            R.layout.fragment_home,
+            container,
+            false
+        )
+        return binding.root
+    }
+
+
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        initView()
+        binding.vm = viewModel
+        binding.lifecycleOwner = this
+    }
+
+    private fun initView() {
+        with(binding){
+            logout.setOnClickListener {
+                SPUtils.getInstance(Context.MODE_PRIVATE).clear()
+                ActivityUtils.startActivity(LoginActivity::class.java)
+                requireActivity().finish()
+            }
+            rlInfo.setOnClickListener {
+                ActivityUtils.startActivity(PersonInformActivity::class.java)
+            }
+        }
+
     }
 }

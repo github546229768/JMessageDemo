@@ -1,4 +1,4 @@
-package com.example.gallerydemo.databinding
+package com.rl.jmessagedemo.databinding
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -6,7 +6,6 @@ import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
-import com.rl.jmessagedemo.databinding.DataBindingViewHolder
 
 /**
 
@@ -20,7 +19,7 @@ import com.rl.jmessagedemo.databinding.DataBindingViewHolder
 abstract class DataBindingListAdapter<T>(diffCallback: DiffUtil.ItemCallback<T>) :
     ListAdapter<T, DataBindingViewHolder<T>>(diffCallback) {
 
-    abstract fun getLayoutId():Int
+    abstract fun getLayoutId(): Int
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DataBindingViewHolder<T> {
         val inflate = DataBindingUtil.inflate<ViewDataBinding>(

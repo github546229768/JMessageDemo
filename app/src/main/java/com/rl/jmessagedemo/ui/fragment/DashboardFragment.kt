@@ -44,7 +44,6 @@ class DashboardFragment : BaseFragment() {
         }
     }
 
-
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.addmenu, menu)
     }
@@ -55,7 +54,6 @@ class DashboardFragment : BaseFragment() {
         }
         return super.onOptionsItemSelected(item)
     }
-
 
     private fun initView() {
         setHasOptionsMenu(true)
