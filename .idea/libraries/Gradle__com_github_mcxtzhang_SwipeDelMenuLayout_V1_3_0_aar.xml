@@ -1,12 +1,9 @@
 <component name="libraryTable">
   <library name="Gradle: com.github.mcxtzhang:SwipeDelMenuLayout:V1.3.0@aar">
     <CLASSES>
-      <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/fa5e568b98bc95792075d349fd57ca24/jetified-SwipeDelMenuLayout-V1.3.0/AndroidManifest.xml" />
-      <root url="jar://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/fa5e568b98bc95792075d349fd57ca24/jetified-SwipeDelMenuLayout-V1.3.0/jars/classes.jar!/" />
-      <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/fa5e568b98bc95792075d349fd57ca24/jetified-SwipeDelMenuLayout-V1.3.0/res" />
-      <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/4e686106caa328c65eaf565be59ccd5c/jetified-SwipeDelMenuLayout-V1.3.0/res" />
-      <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/4e686106caa328c65eaf565be59ccd5c/jetified-SwipeDelMenuLayout-V1.3.0/AndroidManifest.xml" />
-      <root url="jar://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/4e686106caa328c65eaf565be59ccd5c/jetified-SwipeDelMenuLayout-V1.3.0/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/3dfb59a7eabe79e655dcf2e57f565f50/jetified-SwipeDelMenuLayout-V1.3.0/AndroidManifest.xml" />
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/3dfb59a7eabe79e655dcf2e57f565f50/jetified-SwipeDelMenuLayout-V1.3.0/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/3dfb59a7eabe79e655dcf2e57f565f50/jetified-SwipeDelMenuLayout-V1.3.0/res" />
     </CLASSES>
     <JAVADOC />
     <SOURCES>
