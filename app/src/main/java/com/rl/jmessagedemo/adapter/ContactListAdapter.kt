@@ -30,7 +30,12 @@ class ContactListAdapter : DataBindingListAdapter<UserInfo>(DiffCallback) {
                     ).apply {
                         putExtra("username", getItem(position).userName)
                         putExtra("type", SINGLE_CHAT_TYPE)
-                        putExtra("title", getItem(position).userName)
+                        putExtra(
+                            "title",
+                            if (getItem(position).nickname.isNullOrEmpty()) getItem(position).userName else getItem(
+                                position
+                            ).nickname
+                        )
                     })
             }
             setOnLongClickListener {

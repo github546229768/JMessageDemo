@@ -18,9 +18,10 @@
 
 
         <com.mcxtzhang.swipemenulib.SwipeMenuLayout
+            android:id="@+id/swipeMenuLayout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:clickable="true"
+            android:clickable="false"
             android:padding="10dp">
 
             <LinearLayout
@@ -30,15 +31,15 @@
                 android:layout_margin="10dp"
                 android:orientation="horizontal">
 
-                <ImageView
+                <de.hdodenhof.circleimageview.CircleImageView
                     android:id="@+id/imageView6"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    style="@style/avatarStyle"
+                    loadImageBitmap="@{item.targetInfo}"
                     android:layout_margin="5dp"
                     app:srcCompat="@mipmap/ic_login_3party_wechat" />
 
                 <LinearLayout
-                    android:layout_width="match_parent"
+                    android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:orientation="vertical">
@@ -47,8 +48,8 @@
                         android:id="@+id/textView6"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="@{item.latestMessage.targetName}"
                         android:textColor="#000"
+                        nickName="@{item.targetInfo}"
                         android:textSize="18sp" />
 
                     <TextView
@@ -67,7 +68,7 @@
 
                     <TextView
                         android:id="@+id/textView8"
-                        time="@{item.lastMsgDate}"
+                        simpleDateTime="@{item.lastMsgDate}"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="5dp"

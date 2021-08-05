@@ -1,9 +1,9 @@
 package com.rl.jmessagedemo.ui.fragment
 
 import android.app.Activity
+import android.app.ProgressDialog
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.*
 import androidx.activity.result.contract.ActivityResultContracts.StartActivityForResult
 import androidx.databinding.DataBindingUtil
@@ -51,11 +51,14 @@ class NotificationsFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         initView()
         viewModel.conversationLiveData.observe(viewLifecycleOwner) {
-            Log.i("TAG-------->", "onViewCreated: ")
             mAdapter.submitList(it)
+            binding.recyclerview.scrollToPosition(0)
+        }
+        val progressDialog = ProgressDialog(requireActivity())
+        viewModel.loadingEvent.observe(viewLifecycleOwner) {
+            if (it) progressDialog.show() else progressDialog.hide()
         }
     }
-
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.more_option, menu)
@@ -64,12 +67,6 @@ class NotificationsFragment : Fragment() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if (item.itemId == R.id.add_group) {
             resultLauncher.launch(Intent(requireActivity(), NewGroupChatActivity::class.java))
-            //遗弃方法
-//            ActivityUtils.startActivityForResult(
-//                requireActivity(),
-//                NewGroupChatActivity::class.java,
-//                REQUEST_CODE_ONE
-//            )
         }
         return super.onOptionsItemSelected(item)
     }

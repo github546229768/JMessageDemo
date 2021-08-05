@@ -11,10 +11,10 @@ import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.rl.jmessagedemo.R
 import com.rl.jmessagedemo.adapter.MessageListAdapter
-import com.rl.jmessagedemo.constant.REQUEST_CODE_TWO
+import com.rl.jmessagedemo.constant.GROUP_CHAT_TYPE
+import com.rl.jmessagedemo.constant.SINGLE_CHAT_TYPE
 import com.rl.jmessagedemo.databinding.ActivityChatBinding
 import com.rl.jmessagedemo.viewmodel.ChatViewModel
-import kotlin.properties.Delegates
 
 
 class ChatActivity : BaseActivity() {
@@ -23,8 +23,8 @@ class ChatActivity : BaseActivity() {
     }
     private val viewModel: ChatViewModel by viewModels()
     private val mAdapter by lazy { MessageListAdapter() }
-    lateinit var username: String //聊天key
-    private var type by Delegates.notNull<Int>() ///聊天类型
+    private var username = "0" //聊天key   默认为单聊
+    private var type = SINGLE_CHAT_TYPE ///聊天类型  默认为单聊
 
     override fun onSupportNavigateUp(): Boolean {
         finish()
@@ -44,10 +44,13 @@ class ChatActivity : BaseActivity() {
         }
     }
 
-
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.chat_menu, menu)
-        return true
+        return when (type) {
+            SINGLE_CHAT_TYPE -> false
+            GROUP_CHAT_TYPE -> true
+            else -> false
+        }
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -55,7 +58,7 @@ class ChatActivity : BaseActivity() {
             Intent(this@ChatActivity, ChatDetailActivity::class.java).apply {
                 putExtra("type", type)
                 putExtra("username", username)
-                startActivityForResult(this, REQUEST_CODE_TWO)
+                startActivity(this)
             }
         }
         return super.onOptionsItemSelected(item)
@@ -112,6 +115,4 @@ class ChatActivity : BaseActivity() {
     private fun scrollToBottom() {
         binding.recycleview.scrollToPosition(viewModel.allMessageLiveData.value!!.size - 1)
     }
-
-
 }

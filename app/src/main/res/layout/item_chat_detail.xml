@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android">
 
     <data>
         <variable
@@ -16,11 +17,10 @@
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/iv"
-            android:layout_width="45dp"
-            android:layout_height="45dp"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="10dp"
-            android:src="@mipmap/ic_login_3party_wechat"
+            style="@style/avatarStyle"
+            loadImageBitmap="@{item.userInfo}"
             android:visibility="gone" />
 
 
@@ -30,10 +30,11 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="10dp"
-            android:text="@{item.userInfo.userName}"
+            nickName="@{item.userInfo}"
             android:textColor="#ff000000"
             android:textSize="9sp"
-            android:visibility="gone" />
+            android:visibility="gone"
+            tools:ignore="SmallSp" />
 
 
         <FrameLayout
@@ -49,7 +50,8 @@
                 android:layout_height="20dp"
                 android:layout_marginStart="12.5dp"
                 android:layout_marginTop="12.5dp"
-                android:src="@drawable/add_blue" />
+                android:src="@drawable/add_blue"
+                android:contentDescription="@string/app_name" />
 
         </FrameLayout>
 
