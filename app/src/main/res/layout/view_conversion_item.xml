@@ -91,7 +91,7 @@
             </LinearLayout>
 
             <TextView
-                android:id="@+id/textView11"
+                android:id="@+id/toTop"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:background="#FF9800"
@@ -102,7 +102,7 @@
                 android:textSize="18sp" />
 
             <TextView
-                android:id="@+id/textView12"
+                android:id="@+id/deleteItem"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:background="#F41808"

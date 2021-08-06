@@ -27,6 +27,10 @@ import com.rl.jmessagedemo.viewmodel.ChatDetailViewModel
 import java.io.File
 
 class ChatDetailActivity : BaseActivity() {
+    override fun onSupportNavigateUp(): Boolean {
+        finish()
+        return super.onSupportNavigateUp()
+    }
     private val binding: ActivityChatDetailBinding by lazy {
         DataBindingUtil.setContentView(this, R.layout.activity_chat_detail)
     }
@@ -76,6 +80,7 @@ class ChatDetailActivity : BaseActivity() {
     }
 
     private fun initView() {
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
         mAdapter.setOnFootItemClickListener(object : ChatDetailAdapter.OnItemClickListener {
             override fun onItemClick(view: View, position: Int) {
                 if (position == mAdapter.currentList.size - 1) {

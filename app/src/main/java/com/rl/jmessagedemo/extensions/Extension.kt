@@ -1,6 +1,7 @@
 package com.rl.jmessagedemo.extensions
 
 import android.graphics.Bitmap
+import android.util.Log
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.databinding.BindingAdapter
@@ -34,6 +35,7 @@ fun loadImageBitmap(image: ImageView, bitmap: Bitmap?) {
 @BindingAdapter("loadImageBitmap", requireAll = false)
 fun loadImageBitmap(image: ImageView, any: Any?) {
     if (any is UserInfo) {
+        Log.i("TAG-------->", "UserInfo: ${any.userName}")
         any.getAvatarBitmap(object : GetAvatarBitmapCallback() {
             override fun gotResult(i: Int, s: String, bitmap: Bitmap?) {
                 if (i == 0) {
@@ -45,6 +47,7 @@ fun loadImageBitmap(image: ImageView, any: Any?) {
             }
         })
     } else if (any is GroupInfo) {
+        Log.i("TAG-------->", "GroupInfo: ${any.groupName}")
         any.getAvatarBitmap(object : GetAvatarBitmapCallback() {
             override fun gotResult(i: Int, s: String, bitmap: Bitmap?) {
                 if (i == 0) {

@@ -55,8 +55,10 @@ class NotificationsFragment : Fragment() {
         viewModel.conversationLiveData.observe(viewLifecycleOwner) {
             mAdapter.updateList(it.toMutableList())
         }
-        viewModel.loadingEvent.observe(viewLifecycleOwner) {
-        }
+//        requireActivity().sendBroadcast(Intent().apply {
+//            action = MESSAGE_RECEIVER_ACTION_KEY
+//            putExtra("num", "1")
+//        })
     }
 
     override fun onResume() {

@@ -94,12 +94,12 @@ class ConversationsListAdapter : RecyclerView.Adapter<DataBindingViewHolder<Conv
                         putExtra("type", type)
                     })
             }
-            findViewById<View>(R.id.textView11).setOnClickListener {
+            findViewById<View>(R.id.toTop).setOnClickListener {
                 Collections.swap(currentList, position, 0)
                 notifyItemMoved(position, 0)
                 notifyItemRangeChanged(0, position + 1)
             }
-            findViewById<View>(R.id.textView12).setOnClickListener {
+            findViewById<View>(R.id.deleteItem).setOnClickListener {
                 val info: Any
                 when (currentList[position].type) {
                     ConversationType.group -> {

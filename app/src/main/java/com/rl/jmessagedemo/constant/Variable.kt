@@ -11,7 +11,7 @@ package com.rl.jmessagedemo.constant
 
 const val REQUEST_CODE_ONE = 0x001
 
-const val SINGLE_CHAT_TYPE  = 0x002
+const val SINGLE_CHAT_TYPE = 0x002
 const val GROUP_CHAT_TYPE = 0x003
 const val REQUEST_CODE_TWO = 0x003
 
@@ -27,5 +27,8 @@ const val GROUP_ADD = 0x009
 /*Sp*/
 const val UPDATE_GROUP_NAME = "0x010" //群名更改key
 const val IS_UPDATE_GROUP_INFO = "0x011" //是否群信息更改key
+
+/*广播action key*/
+const val MESSAGE_RECEIVER_ACTION_KEY = "this is message receiver action key"
 
 

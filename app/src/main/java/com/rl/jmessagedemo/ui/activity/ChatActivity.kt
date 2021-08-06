@@ -3,6 +3,7 @@ package com.rl.jmessagedemo.ui.activity
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
@@ -16,6 +17,7 @@ import com.rl.jmessagedemo.R
 import com.rl.jmessagedemo.adapter.MessageListAdapter
 import com.rl.jmessagedemo.constant.*
 import com.rl.jmessagedemo.databinding.ActivityChatBinding
+import com.rl.jmessagedemo.extensions.SoftKeyBoardListener
 import com.rl.jmessagedemo.ui.fragment.HomeFragment
 import com.rl.jmessagedemo.viewmodel.ChatViewModel
 import io.github.rockerhieu.emojicon.EmojiconGridFragment
@@ -103,22 +105,10 @@ class ChatActivity : BaseActivity(), EmojiconsFragment.OnEmojiconBackspaceClicke
         with(binding) {
             recycleview.apply {
                 setHasFixedSize(true)
-                layoutManager = LinearLayoutManager(context).apply { stackFromEnd = true }
+                layoutManager = LinearLayoutManager(context)
                 adapter = mAdapter
-//                addOnScrollListener(object : RecyclerView.OnScrollListener() {
-//                    override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
-//                        //当前状态没发生滚动时
-//                        if (newState == RecyclerView.SCROLL_STATE_IDLE) {
-//                            val linearLayoutManager = layoutManager as LinearLayoutManager
-//                            //如果当前可见条目的位置为第1个
-//                            if (linearLayoutManager.findFirstVisibleItemPosition() == 0) {
-//                                presenter.loadMoreData(username)//加载更多数据
-//                            }
-//                        }
-//                    }
-//                })
             }
-            inputMessage.setOnEditorActionListener { v, actionId, event ->
+            inputMessage.setOnEditorActionListener { _, _, _ ->
                 viewModel.sendMessage(inputMessage.text.toString())
                 binding.inputMessage.text?.clear()
                 hideSoftKeyboard()
@@ -152,6 +142,17 @@ class ChatActivity : BaseActivity(), EmojiconsFragment.OnEmojiconBackspaceClicke
                 initUiStyle(arrayOf(homeFragment, emotionFragment))
             }
         }
+
+        /*软键盘监听实现的接口*/
+        SoftKeyBoardListener.setListener(this,object : SoftKeyBoardListener.OnSoftKeyBoardChangeListener{
+            override fun keyBoardShow(height: Int) {
+                scrollToBottom()
+            }
+
+            override fun keyBoardHide(height: Int) {
+                Log.i("TAG-------->", "keyBoardHide: ")
+            }
+        })
     }
 
     //隐藏所有Fragment  优化显示
