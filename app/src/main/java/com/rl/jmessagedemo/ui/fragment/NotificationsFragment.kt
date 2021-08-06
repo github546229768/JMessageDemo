@@ -1,7 +1,7 @@
 package com.rl.jmessagedemo.ui.fragment
 
 import android.app.Activity
-import android.app.ProgressDialog
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.*
@@ -10,8 +10,10 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.blankj.utilcode.util.SPUtils
 import com.rl.jmessagedemo.R
-import com.rl.jmessagedemo.adapter.ConversationListAdapter
+import com.rl.jmessagedemo.adapter.ConversationsListAdapter
+import com.rl.jmessagedemo.constant.IS_UPDATE_GROUP_INFO
 import com.rl.jmessagedemo.databinding.FragmentNotificationsBinding
 import com.rl.jmessagedemo.ui.activity.NewGroupChatActivity
 import com.rl.jmessagedemo.viewmodel.NotificationsViewModel
@@ -24,7 +26,7 @@ class NotificationsFragment : Fragment() {
     private lateinit var binding: FragmentNotificationsBinding
 
     private val mAdapter by lazy {
-        ConversationListAdapter()
+        ConversationsListAdapter()
     }
 
     private var resultLauncher = registerForActivityResult(StartActivityForResult()) { result ->
@@ -51,12 +53,17 @@ class NotificationsFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         initView()
         viewModel.conversationLiveData.observe(viewLifecycleOwner) {
-            mAdapter.submitList(it)
-            binding.recyclerview.scrollToPosition(0)
+            mAdapter.updateList(it.toMutableList())
         }
-        val progressDialog = ProgressDialog(requireActivity())
         viewModel.loadingEvent.observe(viewLifecycleOwner) {
-            if (it) progressDialog.show() else progressDialog.hide()
+        }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        if (SPUtils.getInstance(Context.MODE_PRIVATE).getBoolean(IS_UPDATE_GROUP_INFO, false)) {
+            viewModel.fetchData()
+            SPUtils.getInstance(Context.MODE_PRIVATE).put(IS_UPDATE_GROUP_INFO, false)
         }
     }
 

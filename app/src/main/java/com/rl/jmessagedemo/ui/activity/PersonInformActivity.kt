@@ -123,7 +123,6 @@ class PersonInformActivity : BaseActivity() {
                                 } else
                                     ToastUtils.showLong("性别更新失败$p1")
                             }
-
                         })
                 }.build<String>()
                 build.setPicker(arrayListOf("男", "女"))

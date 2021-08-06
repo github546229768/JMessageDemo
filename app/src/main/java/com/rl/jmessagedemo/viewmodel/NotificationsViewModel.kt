@@ -6,7 +6,6 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import cn.jpush.im.android.api.JMessageClient
 import cn.jpush.im.android.api.model.Conversation
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 class NotificationsViewModel(application: Application) : BaseViewModel(application) {
@@ -21,7 +20,6 @@ class NotificationsViewModel(application: Application) : BaseViewModel(applicati
     fun fetchData() {
         loadingEvent.value = true
         viewModelScope.launch {
-            delay(1000)
             _conversationLiveData.value = JMessageClient.getConversationList()
             loadingEvent.value = false
         }

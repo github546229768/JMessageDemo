@@ -24,13 +24,10 @@
                 <action android:name="cn.jiguang.user.service.action" />
             </intent-filter>
         </service>
-
-
         <service
             android:name="cn.jpush.android.service.PushService"
             android:process=":multiprocess"
             tools:node="replace"/>
-
 
         <activity android:name=".ui.activity.MainActivity" />
         <activity android:name=".ui.activity.RegisterActivity"/>
@@ -46,6 +43,7 @@
         <activity android:name=".ui.activity.NewGroupChatActivity" />
         <activity android:name=".ui.activity.ChatDetailActivity" />
         <activity android:name=".ui.activity.PersonInformActivity" />
+        <activity android:name=".ui.activity.GroupActivity" />
     </application>
 
 </manifest>

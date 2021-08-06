@@ -31,7 +31,7 @@
                 android:layout_centerVertical="true"
                 android:layout_marginStart="13dp"
                 loadImageBitmap="@{vm.avatar}"
-                android:src="@mipmap/ic_login_3party_wechat" />
+                android:src="@mipmap/head_default" />
 
             <TextView
                 android:id="@+id/tv_username"
@@ -50,13 +50,13 @@
                 android:layout_marginEnd="33dp"
                 android:src="@drawable/code" />
 
-            <View
-                android:layout_width="8dp"
-                android:layout_height="11dp"
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
                 android:layout_centerVertical="true"
                 android:layout_marginEnd="12dp"
-                android:background="@mipmap/back" />
+                android:src="@mipmap/back" />
 
 
         </RelativeLayout>

@@ -10,10 +10,10 @@ import com.rl.jmessagedemo.R
 import com.rl.jmessagedemo.adapter.ContactListAdapter
 import com.rl.jmessagedemo.databinding.FragmentDashboardBinding
 import com.rl.jmessagedemo.ui.activity.AddFriendActivity
+import com.rl.jmessagedemo.ui.activity.GroupActivity
 import com.rl.jmessagedemo.viewmodel.DashboardViewModel
 
 class DashboardFragment : BaseFragment() {
-
 
     private lateinit var binding: FragmentDashboardBinding
 
@@ -62,6 +62,9 @@ class DashboardFragment : BaseFragment() {
                 setHasFixedSize(true)
                 layoutManager = LinearLayoutManager(context)
                 adapter = mAdapter
+            }
+            layoutGroup.setOnClickListener {
+                ActivityUtils.startActivity(GroupActivity::class.java)
             }
         }
 

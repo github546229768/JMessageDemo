@@ -5,6 +5,10 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.databinding.BindingAdapter
 import cn.jpush.im.android.api.callback.GetAvatarBitmapCallback
+import cn.jpush.im.android.api.content.EventNotificationContent
+import cn.jpush.im.android.api.content.MessageContent
+import cn.jpush.im.android.api.content.TextContent
+import cn.jpush.im.android.api.enums.ContentType
 import cn.jpush.im.android.api.model.GroupInfo
 import cn.jpush.im.android.api.model.UserInfo
 import com.rl.jmessagedemo.R
@@ -24,7 +28,7 @@ import com.rl.jmessagedemo.R
 fun loadImageBitmap(image: ImageView, bitmap: Bitmap?) {
     bitmap?.let {
         image.setImageBitmap(it)
-    } ?: image.setImageResource(R.mipmap.ic_login_3party_wechat)
+    } ?: image.setImageResource(R.mipmap.head_default)
 }
 
 @BindingAdapter("loadImageBitmap", requireAll = false)
@@ -35,9 +39,9 @@ fun loadImageBitmap(image: ImageView, any: Any?) {
                 if (i == 0) {
                     bitmap?.let {
                         image.setImageBitmap(it)
-                    } ?: image.setImageResource(R.mipmap.ic_login_3party_wechat)
+                    } ?: image.setImageResource(R.mipmap.head_default)
                 } else
-                    image.setImageResource(R.mipmap.ic_login_3party_wechat)
+                    image.setImageResource(R.mipmap.head_default)
             }
         })
     } else if (any is GroupInfo) {
@@ -46,23 +50,15 @@ fun loadImageBitmap(image: ImageView, any: Any?) {
                 if (i == 0) {
                     bitmap?.let {
                         image.setImageBitmap(it)
-                    } ?: image.setImageResource(R.mipmap.ic_login_3party_wechat)
+                    } ?: image.setImageResource(R.mipmap.head_default)
                 } else
-                    image.setImageResource(R.mipmap.ic_login_3party_wechat)
+                    image.setImageResource(R.mipmap.head_default)
             }
         })
     }
 }
 
-
 /*设置备注如果没有备注则显示账号*/
-@BindingAdapter(value = ["nickName"])
-fun nickName(textView: TextView, userInfo: UserInfo?) {
-    userInfo?.let {
-        textView.text =
-            if (it.nickname.isNullOrEmpty()) it.userName else it.nickname
-    }
-}
 
 @BindingAdapter("nickName", requireAll = false)
 fun nickName(textView: TextView, any: Any?) {
@@ -70,5 +66,21 @@ fun nickName(textView: TextView, any: Any?) {
         textView.text = if (any.nickname.isNullOrEmpty()) any.userName else any.nickname
     } else if (any is GroupInfo) {
         textView.text = any.groupName
+    }
+}
+
+/*不同的消息类型*/
+@BindingAdapter("text", requireAll = false)
+fun simpleText(view: TextView, messageContent: MessageContent?) {
+    when (messageContent?.contentType) {
+        ContentType.text -> {
+            view.text = (messageContent as TextContent).text
+        }
+        ContentType.eventNotification -> {
+            view.text = (messageContent as EventNotificationContent).eventText
+        }
+        else -> {
+            view.text = "非文本消息"
+        }
     }
 }

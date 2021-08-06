@@ -36,7 +36,7 @@
                     style="@style/avatarStyle"
                     loadImageBitmap="@{item.targetInfo}"
                     android:layout_margin="5dp"
-                    app:srcCompat="@mipmap/ic_login_3party_wechat" />
+                    app:srcCompat="@mipmap/head_default" />
 
                 <LinearLayout
                     android:layout_width="0dp"
@@ -57,7 +57,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:gravity="center_vertical"
-                        android:text="@{item.latestText}" />
+                        text="@{item.latestMessage.content}" />
 
                 </LinearLayout>
 
@@ -68,7 +68,7 @@
 
                     <TextView
                         android:id="@+id/textView8"
-                        simpleDateTime="@{item.lastMsgDate}"
+                        simpleDateTime="@{item.latestMessage.createTime}"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="5dp"

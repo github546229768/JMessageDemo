@@ -17,6 +17,9 @@ import com.rl.jmessagedemo.ui.activity.PersonInformActivity
 import com.rl.jmessagedemo.viewmodel.HomeViewModel
 
 class HomeFragment : Fragment() {
+    companion object {
+        fun newInstance() = HomeFragment()
+    }
 
     private lateinit var binding: FragmentHomeBinding
 

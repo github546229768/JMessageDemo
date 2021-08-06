@@ -24,4 +24,8 @@ const val DATA = "0x007"
 const val NEW_GROUP = 0x008
 const val GROUP_ADD = 0x009
 
+/*Sp*/
+const val UPDATE_GROUP_NAME = "0x010" //群名更改key
+const val IS_UPDATE_GROUP_INFO = "0x011" //是否群信息更改key
+
 

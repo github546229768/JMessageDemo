@@ -2,6 +2,7 @@ package com.rl.jmessagedemo.ui.activity
 
 import android.app.Activity
 import android.app.AlertDialog
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
@@ -13,16 +14,14 @@ import androidx.recyclerview.widget.GridLayoutManager
 import cn.jpush.im.android.api.JMessageClient
 import cn.jpush.im.android.api.model.GroupInfo
 import cn.jpush.im.api.BasicCallback
+import com.blankj.utilcode.util.SPUtils
 import com.blankj.utilcode.util.ToastUtils
 import com.luck.picture.lib.PictureSelector
 import com.luck.picture.lib.config.PictureConfig
 import com.luck.picture.lib.config.PictureMimeType
 import com.rl.jmessagedemo.R
 import com.rl.jmessagedemo.adapter.ChatDetailAdapter
-import com.rl.jmessagedemo.constant.DATA
-import com.rl.jmessagedemo.constant.GROUP_ADD
-import com.rl.jmessagedemo.constant.REQUEST_CODE_TWO
-import com.rl.jmessagedemo.constant.TYPE
+import com.rl.jmessagedemo.constant.*
 import com.rl.jmessagedemo.databinding.ActivityChatDetailBinding
 import com.rl.jmessagedemo.viewmodel.ChatDetailViewModel
 import java.io.File
@@ -55,8 +54,10 @@ class ChatDetailActivity : BaseActivity() {
                     JMessageClient.getGroupConversation(groupId).targetInfo as GroupInfo
                 groupInfo.updateAvatar(File(selectList[0].path), "", object : BasicCallback() {
                     override fun gotResult(p0: Int, p1: String?) {
-                        if (p0 == 0)
+                        if (p0 == 0){
+                            SPUtils.getInstance(Context.MODE_PRIVATE).put(IS_UPDATE_GROUP_INFO,true)
                             ToastUtils.showLong("更新群头像成功")
+                        }
                         else
                             ToastUtils.showLong("更新群头像失败$p1")
                     }
@@ -103,8 +104,11 @@ class ChatDetailActivity : BaseActivity() {
                         val groupInfo = JMessageClient.getGroupConversation(groupId).targetInfo as GroupInfo
                         groupInfo.updateName("${editText.text}", object : BasicCallback() {
                             override fun gotResult(p0: Int, p1: String?) {
-                                if (p0 == 0)
+                                if (p0 == 0){
+                                    SPUtils.getInstance(Context.MODE_PRIVATE).put(UPDATE_GROUP_NAME,"${editText.text}")
+                                    SPUtils.getInstance(Context.MODE_PRIVATE).put(IS_UPDATE_GROUP_INFO,true)
                                     ToastUtils.showLong("修改群名成功")
+                                }
                                 else
                                     ToastUtils.showLong("修改群名失败$p1")
                             }
@@ -114,7 +118,6 @@ class ChatDetailActivity : BaseActivity() {
                     create()
                 }.show()
             }
-
             layoutUpdateAvatar.setOnClickListener {
                 //选图片
                 PictureSelector.create(this@ChatDetailActivity)

@@ -29,6 +29,7 @@ class NewGroupChatActivity : BaseActivity() {
     }
     private var type = NEW_GROUP    //默认当前页面是新建群聊
     private var groupId = 0L    //默认当前页面是新建群聊
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         initView()

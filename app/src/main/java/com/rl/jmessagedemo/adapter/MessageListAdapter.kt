@@ -3,20 +3,21 @@ package com.rl.jmessagedemo.adapter
 import android.annotation.SuppressLint
 import android.text.format.DateUtils
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
+import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.core.view.isVisible
 import androidx.databinding.BindingAdapter
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.recyclerview.widget.DiffUtil
-import cn.jpush.im.android.api.content.MessageContent
-import cn.jpush.im.android.api.content.TextContent
-import cn.jpush.im.android.api.enums.ContentType
 import cn.jpush.im.android.api.enums.MessageDirect
+import cn.jpush.im.android.api.enums.MessageStatus
 import cn.jpush.im.android.api.model.Message
-import com.rl.jmessagedemo.databinding.DataBindingListAdapter
 import com.rl.jmessagedemo.R
+import com.rl.jmessagedemo.databinding.DataBindingListAdapter
 import com.rl.jmessagedemo.databinding.DataBindingViewHolder
 import java.text.SimpleDateFormat
 import kotlin.math.absoluteValue
@@ -37,25 +38,36 @@ class MessageListAdapter : DataBindingListAdapter<Message>(DiffCallback) {
         }
 
         @JvmStatic
-        @BindingAdapter("text", requireAll = false)
-        fun simpleText(view: TextView, messageContent: MessageContent) {
-            when(messageContent.contentType){
-                ContentType.text -> {
-                    view.text = (messageContent as TextContent).text
+        @BindingAdapter("isMessageStatus", requireAll = false)
+        fun isMessageStatus(view: View, message: Message) {
+            when (message.status) {
+                MessageStatus.send_success -> {
+                    view.isVisible = false
+                    view.isVisible = false
                 }
-                ContentType.eventNotification ->{
-                    view.text = "此处是自定义通知文字"
+                MessageStatus.send_fail -> {
+                    if (view is ProgressBar)
+                        view.isVisible = false
+                    else if (view is ImageView)
+                        view.isVisible = true
                 }
-                else ->{
-                    view.text = "非文本消息"
+                MessageStatus.send_going -> {
+                    if (view is ProgressBar)
+                        view.isVisible = true
+                    else if (view is ImageView)
+                        view.isVisible = false
+                }
+                else -> {
+                    view.isVisible = false
+                    view.isVisible = false
                 }
             }
         }
     }
 
-
     override fun getItemViewType(position: Int) =
-        if (currentList[position].direct == MessageDirect.send) ITEM_TYPE_SEND_MESSAGE else ITEM_TYPE_RECEIVE_MESSAGE
+        if (currentList[position].direct == MessageDirect.send) ITEM_TYPE_SEND_MESSAGE
+        else ITEM_TYPE_RECEIVE_MESSAGE
 
     override fun getLayoutId() = R.layout.view_send_message_item
 
@@ -79,11 +91,13 @@ class MessageListAdapter : DataBindingListAdapter<Message>(DiffCallback) {
 
     override fun onBindViewHolder(holder: DataBindingViewHolder<Message>, position: Int) {
         super.onBindViewHolder(holder, position)
-        val time = holder.itemView.findViewById<TextView>(R.id.time)
-        if (position != 0) {
-            val distanceTime =
-                (getItem(position).createTime - getItem(position - 1).createTime).absoluteValue
-            time.isVisible = distanceTime > 30 * 1000
+        with(holder.itemView) {
+            val time = findViewById<TextView>(R.id.time)
+            if (position != 0) {
+                val distanceTime =
+                    (getItem(position).createTime - getItem(position - 1).createTime).absoluteValue
+                time.isVisible = distanceTime > 120 * 1000
+            }
         }
     }
 

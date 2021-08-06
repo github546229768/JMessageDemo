@@ -1,6 +1,7 @@
 package com.rl.jmessagedemo.viewmodel
 
 import android.app.Application
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import cn.jpush.im.android.api.JMessageClient
@@ -9,6 +10,7 @@ import cn.jpush.im.android.api.model.Conversation
 import cn.jpush.im.android.api.model.Message
 import cn.jpush.im.api.BasicCallback
 import com.blankj.utilcode.util.LogUtils
+import com.blankj.utilcode.util.ToastUtils
 import com.rl.jmessagedemo.constant.GROUP_CHAT_TYPE
 import com.rl.jmessagedemo.constant.SINGLE_CHAT_TYPE
 
@@ -47,11 +49,11 @@ class ChatViewModel(application: Application) : BaseViewModel(application) {
                     //消息发送成功
                     _allMessageLiveData.value?.add(message)
                     isMessageStatus.value = true
-                    LogUtils.i("消息发送成功")
+                    ToastUtils.showLong("消息发送成功")
                 } else {
                     //消息发送失败
                     isMessageStatus.value = false
-                    LogUtils.i("消息发送失败$p1")
+                    ToastUtils.showLong("消息发送失败$p1")
                 }
             }
         });
