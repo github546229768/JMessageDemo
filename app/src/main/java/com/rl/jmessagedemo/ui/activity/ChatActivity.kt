@@ -14,6 +14,10 @@ import androidx.core.view.*
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.blankj.utilcode.util.SPUtils
+import com.blankj.utilcode.util.ToastUtils
+import com.luck.picture.lib.PictureSelector
+import com.luck.picture.lib.config.PictureConfig
+import com.luck.picture.lib.config.PictureMimeType
 import com.rl.jmessagedemo.R
 import com.rl.jmessagedemo.adapter.MessageListAdapter
 import com.rl.jmessagedemo.constant.*
@@ -39,6 +43,16 @@ class ChatActivity : BaseActivity(), FaceFragment.OnEmojiClickListener {
         return super.onSupportNavigateUp()
     }
 
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == REQUEST_CODE_PHOTO) {
+            val selectList = PictureSelector.obtainMultipleResult(data)
+            if (selectList != null && selectList.size == 1 && selectList[0] != null) {
+                viewModel.sendImageMessage(selectList)
+            }
+        }
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         initView()
@@ -49,6 +63,8 @@ class ChatActivity : BaseActivity(), FaceFragment.OnEmojiClickListener {
         }
         viewModel.isMessageStatus.observe(this) {
             scrollToBottom()
+            mAdapter.notifyItemRemoved(mAdapter.itemCount - 1)
+//            mAdapter.submitList(viewModel.allMessageLiveData.value)
         }
     }
 
@@ -145,6 +161,33 @@ class ChatActivity : BaseActivity(), FaceFragment.OnEmojiClickListener {
             ivOption.setOnClickListener {
                 initUiStyle(moreOptionLayout, false)
             }
+            //打开图库
+            photo.setOnClickListener {
+                PictureSelector.create(this@ChatActivity)
+                    .openGallery(PictureMimeType.ofImage())
+                    .maxSelectNum(1)
+                    .minSelectNum(1)
+                    .selectionMode(PictureConfig.SINGLE)
+                    .previewImage(true)
+                    .compress(true)
+                    .forResult(REQUEST_CODE_PHOTO)
+            }
+            //打开相机
+            camera.setOnClickListener {
+                PictureSelector.create(this@ChatActivity)
+                    .openCamera(PictureMimeType.ofImage())
+                    .maxSelectNum(1)
+                    .minSelectNum(1)
+                    .selectionMode(PictureConfig.SINGLE)
+                    .previewImage(true)
+                    .compress(true)
+                    .forResult(REQUEST_CODE_PHOTO)
+            }
+            //打开文件
+            file.setOnClickListener {
+                ToastUtils.showLong("暂无完善")
+            }
+
         }
     }
 
@@ -168,10 +211,11 @@ class ChatActivity : BaseActivity(), FaceFragment.OnEmojiClickListener {
             tvSound.visibility = View.VISIBLE
             inputMessage.visibility = View.VISIBLE
             ivSound.setImageResource(R.mipmap.sound_record)
-            showSound = true
+            showSound = false
             scrollToBottom()
         }, 50)
     }
+
     //emoji监听回调
     override fun onEmojiDelete() {
         val text: String = binding.inputMessage.text.toString()
@@ -195,6 +239,7 @@ class ChatActivity : BaseActivity(), FaceFragment.OnEmojiClickListener {
         val event = KeyEvent(action, code)
         binding.inputMessage.onKeyDown(KeyEvent.KEYCODE_DEL, event)
     }
+
     override fun onEmojiClick(emoji: Emoji?) {
         if (emoji != null) {
             val index: Int = binding.inputMessage.selectionStart

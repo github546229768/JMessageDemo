@@ -4,6 +4,7 @@ import android.app.Application
 import cn.jpush.im.android.api.JMessageClient
 import com.blankj.utilcode.util.Utils
 import com.lqr.emoji.LQREmotionKit
+import com.rl.jmessagedemo.extensions.CrashUtil
 
 /**
 
@@ -21,5 +22,6 @@ class App : Application() {
         JMessageClient.setDebugMode(true)
         JMessageClient.init(this)
         LQREmotionKit.init(this)//表情包
+        CrashUtil.initCrash(this)
     }
 }

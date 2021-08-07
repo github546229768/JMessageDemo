@@ -1,18 +1,19 @@
 package com.rl.jmessagedemo.viewmodel
 
 import android.app.Application
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import cn.jpush.im.android.api.JMessageClient
+import cn.jpush.im.android.api.content.ImageContent
 import cn.jpush.im.android.api.content.TextContent
 import cn.jpush.im.android.api.model.Conversation
 import cn.jpush.im.android.api.model.Message
 import cn.jpush.im.api.BasicCallback
-import com.blankj.utilcode.util.LogUtils
 import com.blankj.utilcode.util.ToastUtils
+import com.luck.picture.lib.entity.LocalMedia
 import com.rl.jmessagedemo.constant.GROUP_CHAT_TYPE
 import com.rl.jmessagedemo.constant.SINGLE_CHAT_TYPE
+import java.io.File
 
 
 class ChatViewModel(application: Application) : BaseViewModel(application) {
@@ -27,7 +28,7 @@ class ChatViewModel(application: Application) : BaseViewModel(application) {
 
     @Synchronized
     fun fetchData(userName: String, type: Int) {
-        when(type){
+        when (type) {
             SINGLE_CHAT_TYPE -> {
                 //创建单聊会话
                 mConversation = Conversation.createSingleConversation(userName, "")
@@ -43,11 +44,11 @@ class ChatViewModel(application: Application) : BaseViewModel(application) {
 
     fun sendMessage(messageDesc: String) {
         val message = mConversation.createSendMessage(TextContent(messageDesc))
+        _allMessageLiveData.value?.add(message)
         message.setOnSendCompleteCallback(object : BasicCallback() {
             override fun gotResult(responseCode: Int, p1: String?) {
                 if (responseCode == 0) {
                     //消息发送成功
-                    _allMessageLiveData.value?.add(message)
                     isMessageStatus.value = true
                     ToastUtils.showLong("消息发送成功")
                 } else {
@@ -56,7 +57,27 @@ class ChatViewModel(application: Application) : BaseViewModel(application) {
                     ToastUtils.showLong("消息发送失败$p1")
                 }
             }
-        });
+        })
+        JMessageClient.sendMessage(message)
+    }
+
+    //图片
+    fun sendImageMessage(selectList: MutableList<LocalMedia>) {
+        val message = mConversation.createSendMessage(ImageContent(File(selectList[0].path)))
+        _allMessageLiveData.value?.add(message)
+        message.setOnSendCompleteCallback(object : BasicCallback() {
+            override fun gotResult(responseCode: Int, p1: String?) {
+                if (responseCode == 0) {
+                    //消息发送成功
+                    isMessageStatus.value = true
+                    ToastUtils.showLong("消息发送成功")
+                } else {
+                    //消息发送失败
+                    isMessageStatus.value = false
+                    ToastUtils.showLong("消息发送失败$p1")
+                }
+            }
+        })
         JMessageClient.sendMessage(message)
     }
 }

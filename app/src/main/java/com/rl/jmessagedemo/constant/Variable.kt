@@ -31,4 +31,10 @@ const val IS_UPDATE_GROUP_INFO = "0x011" //是否群信息更改key
 /*广播action key*/
 const val MESSAGE_RECEIVER_ACTION_KEY = "this is message receiver action key"
 
+//请求图库
+const val REQUEST_CODE_PHOTO = 0x012
+
+//请求照相
+const val REQUEST_CODE_CAMERA = 0x013
+
 

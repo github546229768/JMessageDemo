@@ -51,15 +51,16 @@ class ChatDetailActivity : BaseActivity() {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == REQUEST_CODE_TWO) {
+        if (requestCode == REQUEST_CODE_PHOTO) {
             val selectList = PictureSelector.obtainMultipleResult(data)
             if (selectList != null && selectList.size == 1 && selectList[0] != null) {
                 val groupInfo =
                     JMessageClient.getGroupConversation(groupId).targetInfo as GroupInfo
                 groupInfo.updateAvatar(File(selectList[0].path), "", object : BasicCallback() {
                     override fun gotResult(p0: Int, p1: String?) {
-                        if (p0 == 0){
-                            SPUtils.getInstance(Context.MODE_PRIVATE).put(IS_UPDATE_GROUP_INFO,true)
+                        if (p0 == 0) {
+                            SPUtils.getInstance(Context.MODE_PRIVATE)
+                                .put(IS_UPDATE_GROUP_INFO, true)
                             ToastUtils.showLong("更新群头像成功")
                         }
                         else
@@ -132,7 +133,7 @@ class ChatDetailActivity : BaseActivity() {
                     .selectionMode(PictureConfig.SINGLE)
                     .previewImage(true)
                     .compress(true)
-                    .forResult(REQUEST_CODE_TWO)
+                    .forResult(REQUEST_CODE_PHOTO)
             }
         }
     }

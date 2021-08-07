@@ -1,6 +1,8 @@
 package com.rl.jmessagedemo.adapter
 
 import android.annotation.SuppressLint
+import android.app.ActivityOptions
+import android.content.Intent
 import android.text.format.DateUtils
 import android.view.LayoutInflater
 import android.view.View
@@ -8,25 +10,31 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.ProgressBar
 import android.widget.TextView
+import androidx.annotation.LayoutRes
 import androidx.core.view.isVisible
 import androidx.databinding.BindingAdapter
 import androidx.databinding.DataBindingUtil
-import androidx.databinding.ViewDataBinding
 import androidx.recyclerview.widget.DiffUtil
+import cn.jpush.im.android.api.content.ImageContent
+import cn.jpush.im.android.api.enums.ContentType
 import cn.jpush.im.android.api.enums.MessageDirect
 import cn.jpush.im.android.api.enums.MessageStatus
 import cn.jpush.im.android.api.model.Message
+import com.blankj.utilcode.util.ActivityUtils
 import com.rl.jmessagedemo.R
 import com.rl.jmessagedemo.databinding.DataBindingListAdapter
 import com.rl.jmessagedemo.databinding.DataBindingViewHolder
+import com.rl.jmessagedemo.ui.activity.PreviewImageActivity
 import java.text.SimpleDateFormat
 import kotlin.math.absoluteValue
 
 
 class MessageListAdapter : DataBindingListAdapter<Message>(DiffCallback) {
     companion object {
-        const val ITEM_TYPE_SEND_MESSAGE = 0
-        const val ITEM_TYPE_RECEIVE_MESSAGE = 1
+        const val ITEM_TYPE_SEND_MESSAGE = 0   //文本发送视图
+        const val ITEM_TYPE_RECEIVE_MESSAGE = 1 //文本接收试图
+        const val ITEM_TYPE_SEND_IMG_MESSAGE = 2 //图片发送试图
+        const val ITEM_TYPE_RECEIVE_IMG_MESSAGE = 3 //图片接收试图
 
         @SuppressLint("SimpleDateFormat")
         @JvmStatic
@@ -66,28 +74,56 @@ class MessageListAdapter : DataBindingListAdapter<Message>(DiffCallback) {
     }
 
     override fun getItemViewType(position: Int) =
-        if (currentList[position].direct == MessageDirect.send) ITEM_TYPE_SEND_MESSAGE
-        else ITEM_TYPE_RECEIVE_MESSAGE
+        when (getItem(position).content.contentType) {
+            ContentType.text -> {
+                if (getItem(position).direct == MessageDirect.send) ITEM_TYPE_SEND_MESSAGE
+                else ITEM_TYPE_RECEIVE_MESSAGE
+            }
+            ContentType.image -> {
+                if (getItem(position).direct == MessageDirect.send) ITEM_TYPE_SEND_IMG_MESSAGE
+                else ITEM_TYPE_RECEIVE_IMG_MESSAGE
+            }
+            else -> {
+                if (getItem(position).direct == MessageDirect.send) ITEM_TYPE_SEND_MESSAGE
+                else ITEM_TYPE_RECEIVE_MESSAGE
+            }
+        }
 
     override fun getLayoutId() = R.layout.view_send_message_item
     private fun getLayoutId2() = R.layout.view_receive_message_item
+    private fun getImageSendLayoutId() = R.layout.view_img_send_message_item
+    private fun getImageReceiveLayoutId() = R.layout.view_img_receive_message_item
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
     ): DataBindingViewHolder<Message> {
-        return if (viewType == ITEM_TYPE_SEND_MESSAGE)
-            super.onCreateViewHolder(parent, viewType)
-        else {
-            val inflate = DataBindingUtil.inflate<ViewDataBinding>(
+        return when (viewType) {
+            ITEM_TYPE_SEND_MESSAGE -> super.onCreateViewHolder(parent, viewType)
+            ITEM_TYPE_RECEIVE_MESSAGE ->
+                bindingViewHolder(getLayoutId2(), parent)
+            ITEM_TYPE_SEND_IMG_MESSAGE ->
+                bindingViewHolder(getImageSendLayoutId(), parent)
+            ITEM_TYPE_RECEIVE_IMG_MESSAGE ->
+                bindingViewHolder(getImageReceiveLayoutId(), parent)
+            else ->
+                super.onCreateViewHolder(parent, viewType)
+        }
+    }
+
+    //绑定DataBindingViewHolder
+    private fun bindingViewHolder(
+        @LayoutRes layoutId: Int,
+        parent: ViewGroup
+    ): DataBindingViewHolder<Message> =
+        DataBindingViewHolder(
+            DataBindingUtil.inflate(
                 LayoutInflater.from(parent.context),
-                getLayoutId2(),
+                layoutId,
                 parent,
                 false
             )
-            return DataBindingViewHolder(inflate)
-        }
-    }
+        )
 
     override fun onBindViewHolder(holder: DataBindingViewHolder<Message>, position: Int) {
         super.onBindViewHolder(holder, position)
@@ -97,6 +133,29 @@ class MessageListAdapter : DataBindingListAdapter<Message>(DiffCallback) {
                 val distanceTime =
                     (getItem(position).createTime - getItem(position - 1).createTime).absoluteValue
                 time.isVisible = distanceTime > 120 * 1000
+            }
+            if (holder.itemViewType == ITEM_TYPE_SEND_IMG_MESSAGE
+                || holder.itemViewType == ITEM_TYPE_RECEIVE_IMG_MESSAGE
+            ) {
+                val imageView = findViewById<ImageView>(R.id.imageview)
+                setOnClickListener {
+                    ActivityUtils.startActivity(
+                        Intent(
+                            context,
+                            PreviewImageActivity::class.java
+                        ).apply {
+                            putExtra(
+                                "imgUrl",
+                                (getItem(position).content as ImageContent).localPath
+                            )
+                        },
+                        ActivityOptions.makeSceneTransitionAnimation(
+                            ActivityUtils.getTopActivity(),
+                            imageView,
+                            "shared"
+                        ).toBundle()
+                    )
+                }
             }
         }
     }
@@ -112,6 +171,4 @@ class MessageListAdapter : DataBindingListAdapter<Message>(DiffCallback) {
             return oldItem == newItem
         }
     }
-
-
 }

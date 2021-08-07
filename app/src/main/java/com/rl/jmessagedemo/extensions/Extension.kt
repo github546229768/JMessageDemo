@@ -1,17 +1,18 @@
 package com.rl.jmessagedemo.extensions
 
 import android.graphics.Bitmap
-import android.util.Log
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.databinding.BindingAdapter
 import cn.jpush.im.android.api.callback.GetAvatarBitmapCallback
 import cn.jpush.im.android.api.content.EventNotificationContent
+import cn.jpush.im.android.api.content.ImageContent
 import cn.jpush.im.android.api.content.MessageContent
 import cn.jpush.im.android.api.content.TextContent
 import cn.jpush.im.android.api.enums.ContentType
 import cn.jpush.im.android.api.model.GroupInfo
 import cn.jpush.im.android.api.model.UserInfo
+import com.bumptech.glide.Glide
 import com.rl.jmessagedemo.R
 import com.sqk.emojirelease.EmojiUtil
 
@@ -21,11 +22,11 @@ import com.sqk.emojirelease.EmojiUtil
 
  * @datetime: 2021/8/5
 
- * @desc:
+ * @desc:kotlin扩展函数
 
  */
 
-/*设置头像*/
+/*加载头像*/
 @BindingAdapter(value = ["loadImageBitmap"])
 fun loadImageBitmap(image: ImageView, bitmap: Bitmap?) {
     bitmap?.let {
@@ -33,6 +34,7 @@ fun loadImageBitmap(image: ImageView, bitmap: Bitmap?) {
     } ?: image.setImageResource(R.mipmap.head_default)
 }
 
+/*重载*/
 @BindingAdapter("loadImageBitmap", requireAll = false)
 fun loadImageBitmap(image: ImageView, any: Any?) {
     if (any is UserInfo) {
@@ -59,9 +61,9 @@ fun loadImageBitmap(image: ImageView, any: Any?) {
         })
     }
 }
+/*end*/
 
 /*设置备注如果没有备注则显示账号*/
-
 @BindingAdapter("nickName", requireAll = false)
 fun nickName(textView: TextView, any: Any?) {
     if (any is UserInfo) {
@@ -70,24 +72,36 @@ fun nickName(textView: TextView, any: Any?) {
         textView.text = any.groupName
     }
 }
+/*end*/
 
-/*不同的消息类型*/
+/*处理不同的消息文本类型（私聊文本、群通知、图片）*/
 @BindingAdapter("text", requireAll = false)
-fun simpleText(view: TextView, messageContent: MessageContent?) {
-    Log.i("TAG-------->", "simpleText: ${messageContent?.contentType}")
+fun text(view: TextView, messageContent: MessageContent?) {
     when (messageContent?.contentType) {
         ContentType.text -> {
-//            view.text = (messageContent as TextContent).text
             EmojiUtil.handlerEmojiText(view, (messageContent as TextContent).text, view.context)
         }
         ContentType.eventNotification -> {
             view.text = (messageContent as EventNotificationContent).eventText
         }
         ContentType.image -> {
-            view.text = "图片消息"
+            view.text = "收到一条图片消息"
         }
         else -> {
             view.text = "非文本消息"
         }
     }
 }
+/*end*/
+
+/*加载图片类型消息*/
+@BindingAdapter("loadImageMessage", requireAll = false)
+fun loadImageMessage(image: ImageView, messageContent: MessageContent?) {
+    if (messageContent?.contentType == ContentType.image) {
+        Glide.with(image.context).load((messageContent as ImageContent).localThumbnailPath)
+            .placeholder(R.drawable.ic_baseline_insert_photo_24)
+            .error(R.drawable.ic_baseline_insert_photo_24)
+            .into(image)
+    }
+}
+/*end*/

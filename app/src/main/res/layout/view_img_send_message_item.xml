@@ -10,10 +10,6 @@
             type="cn.jpush.im.android.api.model.Message" />
 
 
-        <variable
-            name="vm"
-            type="com.rl.jmessagedemo.viewmodel.ChatViewModel" />
-
     </data>
 
     <LinearLayout
@@ -30,9 +26,9 @@
                 android:id="@+id/time"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:time = "@{item.createTime}"
                 android:gravity="center"
-                android:textColor="#999" />
+                android:textColor="#999"
+                app:time="@{item.createTime}" />
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -44,11 +40,11 @@
 
                 <ImageView
                     android:id="@+id/imageView5"
+                    isMessageStatus="@{item}"
                     android:layout_width="20dp"
                     android:layout_height="match_parent"
-                    android:visibility="gone"
-                    isMessageStatus="@{item}"
                     android:layout_marginEnd="2dp"
+                    android:visibility="gone"
                     app:srcCompat="@drawable/error" />
 
                 <ProgressBar
@@ -59,19 +55,15 @@
                     android:layout_height="match_parent"
                     android:layout_marginEnd="5dp" />
 
-                <TextView
-                    android:id="@+id/textView3"
-                    text="@{item.content}"
+                <ImageView
+                    android:id="@+id/imageview"
+                    loadImageMessage="@{item.content}"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="8dp"
-                    android:layout_weight="1"
-                    android:background="@drawable/message_style"
-                    android:backgroundTint="#95ec69"
-                    android:gravity="center_vertical"
-                    android:padding="12dp"
-                    android:text="666666666666666666"
-                    android:textSize="16sp" />
+                    android:minWidth="100dp"
+                    android:minHeight="100dp"
+                    tools:srcCompat="@tools:sample/avatars" />
 
                 <de.hdodenhof.circleimageview.CircleImageView
                     android:id="@+id/imageView3"

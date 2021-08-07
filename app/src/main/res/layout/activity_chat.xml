@@ -32,7 +32,86 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
-            tools:visibility="visible"/>
+            tools:visibility="visible">
+
+            <ImageView
+                android:id="@+id/photo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:background="@drawable/chat_option_icon_background"
+                android:padding="10dp"
+                android:src="@drawable/ic_baseline_insert_photo_24"
+                app:layout_constraintEnd_toStartOf="@+id/camera"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageView
+                android:id="@+id/camera"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/chat_option_icon_background"
+                android:padding="10dp"
+                android:src="@drawable/ic_baseline_camera_alt_24"
+                app:layout_constraintEnd_toStartOf="@+id/file"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/photo"
+                app:layout_constraintTop_toTopOf="@+id/photo" />
+
+            <ImageView
+                android:id="@+id/file"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/chat_option_icon_background"
+                android:padding="10dp"
+                android:src="@drawable/ic_baseline_insert_drive_file_24"
+                app:layout_constraintEnd_toStartOf="@+id/imageView"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/camera"
+                app:layout_constraintTop_toTopOf="@+id/camera" />
+
+            <ImageView
+                android:id="@+id/imageView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/chat_option_icon_background"
+                android:padding="10dp"
+                android:src="@drawable/ic_baseline_insert_photo_24"
+                android:visibility="invisible"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/file"
+                app:layout_constraintTop_toTopOf="@+id/file" />
+
+            <TextView
+                android:id="@+id/textView10"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="照片"
+                app:layout_constraintEnd_toEndOf="@+id/photo"
+                app:layout_constraintStart_toStartOf="@+id/photo"
+                app:layout_constraintTop_toTopOf="@+id/textView11" />
+
+            <TextView
+                android:id="@+id/textView11"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="拍摄"
+                app:layout_constraintEnd_toEndOf="@+id/camera"
+                app:layout_constraintStart_toStartOf="@+id/camera"
+                app:layout_constraintTop_toTopOf="@+id/textView12" />
+
+            <TextView
+                android:id="@+id/textView12"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="3dp"
+                android:text="文件"
+                app:layout_constraintEnd_toEndOf="@+id/file"
+                app:layout_constraintStart_toStartOf="@+id/file"
+                app:layout_constraintTop_toBottomOf="@+id/file" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/constraintLayout2"
