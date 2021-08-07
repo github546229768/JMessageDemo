@@ -39,7 +39,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".ui.activity.AddFriendActivity" android:label="添加好友"/>
-        <activity android:name=".ui.activity.ChatActivity" />
+        <activity android:name=".ui.activity.ChatActivity" android:windowSoftInputMode="adjustResize"/>
         <activity android:name=".ui.activity.NewGroupChatActivity" android:label="群聊" />
         <activity android:name=".ui.activity.ChatDetailActivity" android:label="聊天详情" />
         <activity android:name=".ui.activity.PersonInformActivity" android:label="个人资料"/>

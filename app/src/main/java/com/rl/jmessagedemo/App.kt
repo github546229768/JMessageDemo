@@ -3,6 +3,7 @@ package com.rl.jmessagedemo
 import android.app.Application
 import cn.jpush.im.android.api.JMessageClient
 import com.blankj.utilcode.util.Utils
+import com.lqr.emoji.LQREmotionKit
 
 /**
 
@@ -19,5 +20,6 @@ class App : Application() {
         Utils.init(this)
         JMessageClient.setDebugMode(true)
         JMessageClient.init(this)
+        LQREmotionKit.init(this)//表情包
     }
 }

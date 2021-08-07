@@ -2,7 +2,6 @@ package com.rl.jmessagedemo.adapter
 
 import android.annotation.SuppressLint
 import android.text.format.DateUtils
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -71,7 +70,7 @@ class MessageListAdapter : DataBindingListAdapter<Message>(DiffCallback) {
         else ITEM_TYPE_RECEIVE_MESSAGE
 
     override fun getLayoutId() = R.layout.view_send_message_item
-    fun getLayoutId2() = R.layout.view_receive_message_item
+    private fun getLayoutId2() = R.layout.view_receive_message_item
 
     override fun onCreateViewHolder(
         parent: ViewGroup,

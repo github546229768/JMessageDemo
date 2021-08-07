@@ -3,14 +3,15 @@ package com.rl.jmessagedemo.ui.activity
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
-import android.view.Menu
-import android.view.MenuItem
-import android.view.View
+import android.os.Handler
+import android.os.Looper
+import android.text.Editable
+import android.view.*
+import android.view.animation.Animation
+import android.view.animation.TranslateAnimation
 import androidx.activity.viewModels
-import androidx.core.view.isVisible
+import androidx.core.view.*
 import androidx.databinding.DataBindingUtil
-import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.blankj.utilcode.util.SPUtils
 import com.rl.jmessagedemo.R
@@ -18,15 +19,12 @@ import com.rl.jmessagedemo.adapter.MessageListAdapter
 import com.rl.jmessagedemo.constant.*
 import com.rl.jmessagedemo.databinding.ActivityChatBinding
 import com.rl.jmessagedemo.extensions.SoftKeyBoardListener
-import com.rl.jmessagedemo.ui.fragment.HomeFragment
 import com.rl.jmessagedemo.viewmodel.ChatViewModel
-import io.github.rockerhieu.emojicon.EmojiconGridFragment
-import io.github.rockerhieu.emojicon.EmojiconsFragment
-import io.github.rockerhieu.emojicon.emoji.Emojicon
+import com.sqk.emojirelease.Emoji
+import com.sqk.emojirelease.FaceFragment
 
 
-class ChatActivity : BaseActivity(), EmojiconsFragment.OnEmojiconBackspaceClickedListener,
-    EmojiconGridFragment.OnEmojiconClickedListener {
+class ChatActivity : BaseActivity(), FaceFragment.OnEmojiClickListener {
     private val binding: ActivityChatBinding by lazy {
         DataBindingUtil.setContentView(this, R.layout.activity_chat)
     }
@@ -35,12 +33,6 @@ class ChatActivity : BaseActivity(), EmojiconsFragment.OnEmojiconBackspaceClicke
     private var username = "0" //聊天key   默认为单聊
     private var type = SINGLE_CHAT_TYPE ///聊天类型  默认为单聊
     private var showSound = false
-    private val emotionFragment by lazy {
-        EmojiconsFragment.newInstance(false)
-    }
-    private val homeFragment by lazy {
-        HomeFragment.newInstance()
-    }
 
     override fun onSupportNavigateUp(): Boolean {
         finish()
@@ -68,6 +60,16 @@ class ChatActivity : BaseActivity(), EmojiconsFragment.OnEmojiconBackspaceClicke
             title = updateGroupName
             SPUtils.getInstance(Context.MODE_PRIVATE).put(UPDATE_GROUP_NAME, "")//重新置空
         }
+        /*软键盘监听实现的接口*/
+        SoftKeyBoardListener.setListener(this,
+            object : SoftKeyBoardListener.OnSoftKeyBoardChangeListener {
+                override fun keyBoardShow(height: Int) {
+                    scrollToBottom()
+                }
+
+                override fun keyBoardHide(height: Int) {
+                }
+            })
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -94,29 +96,32 @@ class ChatActivity : BaseActivity(), EmojiconsFragment.OnEmojiconBackspaceClicke
         username = intent.getStringExtra("username").toString()
         title = intent.getStringExtra("title").toString()
         type = intent.getIntExtra("type", 0)
-        //显示返回按钮
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        //初始化表情包Fragment
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)         //显示返回按钮
         supportFragmentManager.beginTransaction()
-            .add(R.id.frameLayout, emotionFragment)
-            .add(R.id.frameLayout, homeFragment)
+            .replace(R.id.frameLayout, FaceFragment.Instance())
             .commitNow()
-
         with(binding) {
             recycleview.apply {
                 setHasFixedSize(true)
                 layoutManager = LinearLayoutManager(context)
                 adapter = mAdapter
+                setOnTouchListener { _, event ->
+                    if (event.action == MotionEvent.ACTION_DOWN) {
+                        hideSoftKeyboard()
+                        hideAllViewLayout()
+                    }
+                    performClick()
+                    false
+                }
             }
             inputMessage.setOnEditorActionListener { _, _, _ ->
                 viewModel.sendMessage(inputMessage.text.toString())
-                binding.inputMessage.text?.clear()
-                hideSoftKeyboard()
+                inputMessage.text?.clear()
                 true
             }
             ivSound.setOnClickListener {
                 hideSoftKeyboard()
-                binding.frameLayout.isVisible = false
+                hideAllViewLayout()
                 inputMessage.clearFocus()
                 if (showSound) {
                     tvSound.visibility = View.INVISIBLE
@@ -131,70 +136,81 @@ class ChatActivity : BaseActivity(), EmojiconsFragment.OnEmojiconBackspaceClicke
             }
             inputMessage.setOnFocusChangeListener { _, hasFocus ->
                 if (hasFocus) {//获取到焦点
-                    frameLayout.isVisible = false
-                    hideAllFragment()
+                    hideAllViewLayout()
                 }
             }
             ivEmoji.setOnClickListener {
-                initUiStyle(arrayOf(emotionFragment, homeFragment))
+                initUiStyle(frameLayout, true)
             }
             ivOption.setOnClickListener {
-                initUiStyle(arrayOf(homeFragment, emotionFragment))
+                initUiStyle(moreOptionLayout, false)
             }
         }
-
-        /*软键盘监听实现的接口*/
-        SoftKeyBoardListener.setListener(this,object : SoftKeyBoardListener.OnSoftKeyBoardChangeListener{
-            override fun keyBoardShow(height: Int) {
-                scrollToBottom()
-            }
-
-            override fun keyBoardHide(height: Int) {
-                Log.i("TAG-------->", "keyBoardHide: ")
-            }
-        })
-    }
-
-    //隐藏所有Fragment  优化显示
-    private fun hideAllFragment() {
-        supportFragmentManager
-            .beginTransaction()
-            .hide(emotionFragment)
-            .commit()
-        supportFragmentManager
-            .beginTransaction()
-            .hide(homeFragment)
-            .commit()
     }
 
     //初始化去软键盘，显示Fragment
-    private fun ActivityChatBinding.initUiStyle(array: Array<Fragment>) {
+    private fun ActivityChatBinding.initUiStyle(showLayout: ViewGroup, isEmotionLayout: Boolean) {
         hideSoftKeyboard()
         inputMessage.clearFocus()
-        frameLayout.isVisible = true
-        supportFragmentManager
-            .beginTransaction()
-            .show(array[0])
-            .commit()
-        supportFragmentManager
-            .beginTransaction()
-            .hide(array[1])
-            .commit()
-        tvSound.visibility = View.INVISIBLE
-        inputMessage.visibility = View.VISIBLE
-        ivSound.setImageResource(R.mipmap.sound_record)
-        showSound = true
+        // 延迟一会，让键盘先隐藏再显示表情键盘，否则会有一瞬间表情键盘和软键盘同时显示
+        Handler(Looper.getMainLooper()).postDelayed({
+            if (isEmotionLayout)
+                binding.moreOptionLayout.visibility = View.INVISIBLE
+            val showAnim = TranslateAnimation(
+                Animation.RELATIVE_TO_SELF, 0.0f,
+                Animation.RELATIVE_TO_SELF, 0.0f,
+                Animation.RELATIVE_TO_SELF, 1.0f,
+                Animation.RELATIVE_TO_SELF, 0.0f
+            )
+            showAnim.duration = 300
+            showLayout.startAnimation(showAnim)
+            showLayout.isVisible = true
+            tvSound.visibility = View.VISIBLE
+            inputMessage.visibility = View.VISIBLE
+            ivSound.setImageResource(R.mipmap.sound_record)
+            showSound = true
+            scrollToBottom()
+        }, 50)
+    }
+    //emoji监听回调
+    override fun onEmojiDelete() {
+        val text: String = binding.inputMessage.text.toString()
+        if (text.isEmpty()) {
+            return
+        }
+        if ("]" == text.substring(text.length - 1, text.length)) {
+            val index = text.lastIndexOf("[")
+            if (index == -1) {
+                val action = KeyEvent.ACTION_DOWN
+                val code = KeyEvent.KEYCODE_DEL
+                val event = KeyEvent(action, code)
+                binding.inputMessage.onKeyDown(KeyEvent.KEYCODE_DEL, event)
+                return
+            }
+            binding.inputMessage.text.delete(index, text.length)
+            return
+        }
+        val action = KeyEvent.ACTION_DOWN
+        val code = KeyEvent.KEYCODE_DEL
+        val event = KeyEvent(action, code)
+        binding.inputMessage.onKeyDown(KeyEvent.KEYCODE_DEL, event)
+    }
+    override fun onEmojiClick(emoji: Emoji?) {
+        if (emoji != null) {
+            val index: Int = binding.inputMessage.selectionStart
+            val editable: Editable = binding.inputMessage.editableText
+            if (index < 0) {
+                editable.append(emoji.content)
+            } else {
+                editable.insert(index, emoji.content)
+            }
+        }
     }
 
-    /*表情包实现的接口*/
-    override fun onEmojiconBackspaceClicked(v: View?) {
-        EmojiconsFragment.backspace(binding.inputMessage)
+    private fun hideAllViewLayout() {
+        binding.frameLayout.isVisible = false
+        binding.moreOptionLayout.isVisible = false
     }
-
-    override fun onEmojiconClicked(emojicon: Emojicon?) {
-        EmojiconsFragment.input(binding.inputMessage, emojicon)
-    }
-    /*end表情包实现的接口*/
 
     private fun scrollToBottom() {
         binding.recycleview.scrollToPosition(viewModel.allMessageLiveData.value!!.size - 1)

@@ -13,6 +13,7 @@ import cn.jpush.im.android.api.enums.ContentType
 import cn.jpush.im.android.api.model.GroupInfo
 import cn.jpush.im.android.api.model.UserInfo
 import com.rl.jmessagedemo.R
+import com.sqk.emojirelease.EmojiUtil
 
 /**
 
@@ -35,7 +36,6 @@ fun loadImageBitmap(image: ImageView, bitmap: Bitmap?) {
 @BindingAdapter("loadImageBitmap", requireAll = false)
 fun loadImageBitmap(image: ImageView, any: Any?) {
     if (any is UserInfo) {
-        Log.i("TAG-------->", "UserInfo: ${any.userName}")
         any.getAvatarBitmap(object : GetAvatarBitmapCallback() {
             override fun gotResult(i: Int, s: String, bitmap: Bitmap?) {
                 if (i == 0) {
@@ -47,7 +47,6 @@ fun loadImageBitmap(image: ImageView, any: Any?) {
             }
         })
     } else if (any is GroupInfo) {
-        Log.i("TAG-------->", "GroupInfo: ${any.groupName}")
         any.getAvatarBitmap(object : GetAvatarBitmapCallback() {
             override fun gotResult(i: Int, s: String, bitmap: Bitmap?) {
                 if (i == 0) {
@@ -75,12 +74,17 @@ fun nickName(textView: TextView, any: Any?) {
 /*不同的消息类型*/
 @BindingAdapter("text", requireAll = false)
 fun simpleText(view: TextView, messageContent: MessageContent?) {
+    Log.i("TAG-------->", "simpleText: ${messageContent?.contentType}")
     when (messageContent?.contentType) {
         ContentType.text -> {
-            view.text = (messageContent as TextContent).text
+//            view.text = (messageContent as TextContent).text
+            EmojiUtil.handlerEmojiText(view, (messageContent as TextContent).text, view.context)
         }
         ContentType.eventNotification -> {
             view.text = (messageContent as EventNotificationContent).eventText
+        }
+        ContentType.image -> {
+            view.text = "图片消息"
         }
         else -> {
             view.text = "非文本消息"

@@ -110,13 +110,4 @@ class MainActivity : BaseActivity() {
             }
         }
     }
-
-//    /*消息相关通知事件*/
-//    fun onEvent(event: MessageEvent) {
-//        val allUnReadMsgCount = JMessageClient.getAllUnReadMsgCount()
-//        Log.i("TAG-------->", "onEvent: $allUnReadMsgCount")
-//        msgNum.text = "$allUnReadMsgCount"
-//    }
-
-
 }

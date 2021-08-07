@@ -98,7 +98,11 @@ dependencies {
     implementation 'com.contrarywind:Android-PickerView:4.1.9'
     //表情包
     api 'io.github.rockerhieu:emojicon:1.4.2'
+    implementation 'com.lqr.emoji:library:1.0.2'
+
+    implementation 'org.apache.commons:commons-text:1.7'
 
 //    implementation 'androidx.emoji:emoji:1.0.0'
+    implementation 'com.tb.emoji:yykEmoji:1.1.0'
 
 }

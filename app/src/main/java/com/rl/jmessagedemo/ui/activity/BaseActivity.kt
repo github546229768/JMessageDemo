@@ -2,7 +2,6 @@ package com.rl.jmessagedemo.ui.activity
 
 import android.content.Context
 import android.os.Bundle
-import android.util.Log
 import android.view.inputmethod.InputMethodManager
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
@@ -32,10 +31,8 @@ open class BaseActivity : AppCompatActivity() {
 
     //登录状态发生改变
     fun onEvent(event: LoginStateChangeEvent) {
-        Log.i("TAG-------->", "LoginStateChangeEvent: ${event.reason}")
         when (event.reason) {
             LoginStateChangeEvent.Reason.user_logout -> {
-                Log.i("TAG-------->", "user_logout: ${event.reason}")
                 with(AlertDialog.Builder(this)) {
                     setTitle("提示")
                     setMessage("用户在其他设备登陆")
