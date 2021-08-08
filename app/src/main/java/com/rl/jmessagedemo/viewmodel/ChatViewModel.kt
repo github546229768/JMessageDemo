@@ -3,6 +3,7 @@ package com.rl.jmessagedemo.viewmodel
 import android.app.Application
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.viewModelScope
 import cn.jpush.im.android.api.JMessageClient
 import cn.jpush.im.android.api.content.ImageContent
 import cn.jpush.im.android.api.content.TextContent
@@ -13,6 +14,8 @@ import com.blankj.utilcode.util.ToastUtils
 import com.luck.picture.lib.entity.LocalMedia
 import com.rl.jmessagedemo.constant.GROUP_CHAT_TYPE
 import com.rl.jmessagedemo.constant.SINGLE_CHAT_TYPE
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import java.io.File
 
 
@@ -28,16 +31,18 @@ class ChatViewModel(application: Application) : BaseViewModel(application) {
 
     @Synchronized
     fun fetchData(userName: String, type: Int) {
-        when (type) {
-            SINGLE_CHAT_TYPE -> {
-                //创建单聊会话
-                mConversation = Conversation.createSingleConversation(userName, "")
-                _allMessageLiveData.value = mConversation.allMessage
-            }
-            GROUP_CHAT_TYPE -> {
-                //群聊会话
-                mConversation = Conversation.createGroupConversation(userName.toLong())
-                _allMessageLiveData.value = mConversation.allMessage
+        viewModelScope.launch(Dispatchers.IO) {
+            when (type) {
+                SINGLE_CHAT_TYPE -> {
+                    //创建单聊会话
+                    mConversation = Conversation.createSingleConversation(userName, "")
+                    _allMessageLiveData.postValue(mConversation.allMessage)
+                }
+                GROUP_CHAT_TYPE -> {
+                    //群聊会话
+                    mConversation = Conversation.createGroupConversation(userName.toLong())
+                    _allMessageLiveData.postValue(mConversation.allMessage)
+                }
             }
         }
     }

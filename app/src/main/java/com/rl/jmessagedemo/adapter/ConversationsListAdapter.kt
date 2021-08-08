@@ -20,6 +20,7 @@ import com.blankj.utilcode.util.ActivityUtils
 import com.blankj.utilcode.util.ToastUtils
 import com.rl.jmessagedemo.R
 import com.rl.jmessagedemo.constant.GROUP_CHAT_TYPE
+import com.rl.jmessagedemo.constant.MESSAGE_RECEIVER_ACTION_KEY
 import com.rl.jmessagedemo.constant.SINGLE_CHAT_TYPE
 import com.rl.jmessagedemo.databinding.DataBindingViewHolder
 import com.rl.jmessagedemo.ui.activity.ChatActivity
@@ -38,6 +39,7 @@ class ConversationsListAdapter : RecyclerView.Adapter<DataBindingViewHolder<Conv
                 else SimpleDateFormat("yyyy/MM/dd HH:mm").format(time)
         }
     }
+
     private var currentList = mutableListOf<Conversation>()
 
     //对外提供的刷新列表
@@ -93,6 +95,13 @@ class ConversationsListAdapter : RecyclerView.Adapter<DataBindingViewHolder<Conv
                         putExtra("username", key)
                         putExtra("type", type)
                     })
+                if (currentList[position].unReadMsgCnt > 0) {
+                    currentList[position].resetUnreadCount()
+                    ActivityUtils.getTopActivity().sendBroadcast(Intent().apply {
+                        action = MESSAGE_RECEIVER_ACTION_KEY
+                    })
+                    notifyItemChanged(position)
+                }
             }
             findViewById<View>(R.id.toTop).setOnClickListener {
                 Collections.swap(currentList, position, 0)

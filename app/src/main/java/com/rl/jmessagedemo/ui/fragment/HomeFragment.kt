@@ -6,8 +6,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import cn.jpush.im.android.api.JMessageClient
 import com.blankj.utilcode.util.ActivityUtils
 import com.blankj.utilcode.util.SPUtils
 import com.rl.jmessagedemo.R
@@ -16,7 +16,7 @@ import com.rl.jmessagedemo.ui.activity.LoginActivity
 import com.rl.jmessagedemo.ui.activity.PersonInformActivity
 import com.rl.jmessagedemo.viewmodel.HomeViewModel
 
-class HomeFragment : Fragment() {
+class HomeFragment : BaseFragment() {
     companion object {
         fun newInstance() = HomeFragment()
     }
@@ -51,6 +51,7 @@ class HomeFragment : Fragment() {
     private fun initView() {
         with(binding){
             logout.setOnClickListener {
+                JMessageClient.logout()
                 SPUtils.getInstance(Context.MODE_PRIVATE).clear()
                 ActivityUtils.startActivity(LoginActivity::class.java)
                 requireActivity().finish()

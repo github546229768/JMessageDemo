@@ -20,5 +20,6 @@
         android:minWidth="20dp"
         android:text="99"
         android:textColor="@android:color/white"
+        android:visibility="gone"
         tools:ignore="RtlHardcoded" />
 </LinearLayout>

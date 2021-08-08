@@ -19,6 +19,10 @@ class HomeViewModel : ViewModel() {
     val userInfo: MutableLiveData<UserInfo> = _userInfo
 
     init {
+        fetchData()
+    }
+
+    private fun fetchData() {
         JMessageClient.getMyInfo()?.let {
             _userInfo.value = it
             _userName.value = it.userName

@@ -17,12 +17,11 @@ import cn.jpush.im.api.BasicCallback
 import com.blankj.utilcode.util.SPUtils
 import com.blankj.utilcode.util.ToastUtils
 import com.luck.picture.lib.PictureSelector
-import com.luck.picture.lib.config.PictureConfig
-import com.luck.picture.lib.config.PictureMimeType
 import com.rl.jmessagedemo.R
 import com.rl.jmessagedemo.adapter.ChatDetailAdapter
 import com.rl.jmessagedemo.constant.*
 import com.rl.jmessagedemo.databinding.ActivityChatDetailBinding
+import com.rl.jmessagedemo.extensions.PictureSelectorUtil
 import com.rl.jmessagedemo.viewmodel.ChatDetailViewModel
 import java.io.File
 
@@ -31,6 +30,7 @@ class ChatDetailActivity : BaseActivity() {
         finish()
         return super.onSupportNavigateUp()
     }
+
     private val binding: ActivityChatDetailBinding by lazy {
         DataBindingUtil.setContentView(this, R.layout.activity_chat_detail)
     }
@@ -62,8 +62,7 @@ class ChatDetailActivity : BaseActivity() {
                             SPUtils.getInstance(Context.MODE_PRIVATE)
                                 .put(IS_UPDATE_GROUP_INFO, true)
                             ToastUtils.showLong("更新群头像成功")
-                        }
-                        else
+                        } else
                             ToastUtils.showLong("更新群头像失败$p1")
                     }
                 })
@@ -107,15 +106,17 @@ class ChatDetailActivity : BaseActivity() {
                     setTitle("请输入新的群名")
                     setView(editText)
                     setNegativeButton("确定") { _, _ ->
-                        val groupInfo = JMessageClient.getGroupConversation(groupId).targetInfo as GroupInfo
+                        val groupInfo =
+                            JMessageClient.getGroupConversation(groupId).targetInfo as GroupInfo
                         groupInfo.updateName("${editText.text}", object : BasicCallback() {
                             override fun gotResult(p0: Int, p1: String?) {
-                                if (p0 == 0){
-                                    SPUtils.getInstance(Context.MODE_PRIVATE).put(UPDATE_GROUP_NAME,"${editText.text}")
-                                    SPUtils.getInstance(Context.MODE_PRIVATE).put(IS_UPDATE_GROUP_INFO,true)
+                                if (p0 == 0) {
+                                    SPUtils.getInstance(Context.MODE_PRIVATE)
+                                        .put(UPDATE_GROUP_NAME, "${editText.text}")
+                                    SPUtils.getInstance(Context.MODE_PRIVATE)
+                                        .put(IS_UPDATE_GROUP_INFO, true)
                                     ToastUtils.showLong("修改群名成功")
-                                }
-                                else
+                                } else
                                     ToastUtils.showLong("修改群名失败$p1")
                             }
                         })
@@ -125,15 +126,12 @@ class ChatDetailActivity : BaseActivity() {
                 }.show()
             }
             layoutUpdateAvatar.setOnClickListener {
-                //选图片
-                PictureSelector.create(this@ChatDetailActivity)
-                    .openGallery(PictureMimeType.ofImage())
-                    .maxSelectNum(1)
-                    .minSelectNum(1)
-                    .selectionMode(PictureConfig.SINGLE)
-                    .previewImage(true)
-                    .compress(true)
-                    .forResult(REQUEST_CODE_PHOTO)
+                PictureSelectorUtil.openGallerySingle(
+                    this@ChatDetailActivity,
+                    isCompress = false,
+                    isCrop = false,
+                    requestCode = REQUEST_CODE_PHOTO
+                )
             }
         }
     }

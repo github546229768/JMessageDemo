@@ -45,7 +45,7 @@ object CrashUtil {
 
             File(filePath).appendText(errorLog) //覆盖原先的文本内容
 
-            defaultHandler?.uncaughtException(thread, throwable)
+            defaultHandler?.uncaughtException(thread!!, throwable)
         }
     }
 

@@ -6,6 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import cn.jpush.im.android.api.JMessageClient
 import cn.jpush.im.android.api.model.Conversation
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 class NotificationsViewModel(application: Application) : BaseViewModel(application) {
@@ -17,11 +18,10 @@ class NotificationsViewModel(application: Application) : BaseViewModel(applicati
         fetchData()
     }
 
+    @Synchronized
     fun fetchData() {
-        loadingEvent.value = true
-        viewModelScope.launch {
-            _conversationLiveData.value = JMessageClient.getConversationList()
-            loadingEvent.value = false
+        viewModelScope.launch (Dispatchers.IO){
+            _conversationLiveData.postValue(JMessageClient.getConversationList())
         }
     }
 

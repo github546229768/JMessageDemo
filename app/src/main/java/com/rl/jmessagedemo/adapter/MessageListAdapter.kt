@@ -112,10 +112,7 @@ class MessageListAdapter : DataBindingListAdapter<Message>(DiffCallback) {
     }
 
     //绑定DataBindingViewHolder
-    private fun bindingViewHolder(
-        @LayoutRes layoutId: Int,
-        parent: ViewGroup
-    ): DataBindingViewHolder<Message> =
+    private fun bindingViewHolder(@LayoutRes layoutId: Int, parent: ViewGroup): DataBindingViewHolder<Message> =
         DataBindingViewHolder(
             DataBindingUtil.inflate(
                 LayoutInflater.from(parent.context),
@@ -137,16 +134,14 @@ class MessageListAdapter : DataBindingListAdapter<Message>(DiffCallback) {
             if (holder.itemViewType == ITEM_TYPE_SEND_IMG_MESSAGE
                 || holder.itemViewType == ITEM_TYPE_RECEIVE_IMG_MESSAGE
             ) {
-                val imageView = findViewById<ImageView>(R.id.imageview)
-                setOnClickListener {
+                val imageView: ImageView = findViewById(R.id.imageview)
+                imageView.setOnClickListener {
+                    val imageContent = getItem(position).content as ImageContent
                     ActivityUtils.startActivity(
-                        Intent(
-                            context,
-                            PreviewImageActivity::class.java
-                        ).apply {
+                        Intent(context, PreviewImageActivity::class.java).apply {
                             putExtra(
                                 "imgUrl",
-                                (getItem(position).content as ImageContent).localPath
+                                imageContent.localPath ?: imageContent.localThumbnailPath
                             )
                         },
                         ActivityOptions.makeSceneTransitionAnimation(

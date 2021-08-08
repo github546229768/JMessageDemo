@@ -15,8 +15,9 @@ import com.luck.picture.lib.PictureSelector
 import com.luck.picture.lib.config.PictureConfig
 import com.luck.picture.lib.config.PictureMimeType
 import com.rl.jmessagedemo.R
-import com.rl.jmessagedemo.constant.REQUEST_CODE_TWO
+import com.rl.jmessagedemo.constant.REQUEST_CODE_PHOTO
 import com.rl.jmessagedemo.databinding.ActivityPersonInformBinding
+import com.rl.jmessagedemo.extensions.PictureSelectorUtil
 import com.rl.jmessagedemo.viewmodel.PersonInfoViewModel
 import java.io.File
 
@@ -37,7 +38,7 @@ class PersonInformActivity : BaseActivity() {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == REQUEST_CODE_TWO) {
+        if (requestCode == REQUEST_CODE_PHOTO) {
             val selectList = PictureSelector.obtainMultipleResult(data)
             if (selectList != null && selectList.size == 1 && selectList[0] != null) {
                 JMessageClient.updateUserAvatar(File(selectList[0].path), object : BasicCallback() {
@@ -64,15 +65,12 @@ class PersonInformActivity : BaseActivity() {
     private fun initView() {
         with(binding) {
             layoutHead.setOnClickListener {
-                //选图片
-                PictureSelector.create(this@PersonInformActivity)
-                    .openGallery(PictureMimeType.ofImage())
-                    .maxSelectNum(1)
-                    .minSelectNum(1)
-                    .selectionMode(PictureConfig.SINGLE)
-                    .previewImage(true)
-                    .compress(true)
-                    .forResult(REQUEST_CODE_TWO)
+                PictureSelectorUtil.openGallerySingle(
+                    this@PersonInformActivity,
+                    isCompress = false,
+                    isCrop = false,
+                    requestCode = REQUEST_CODE_PHOTO
+                )
             }
             layoutName.setOnClickListener {
                 val editText = EditText(this@PersonInformActivity).apply {

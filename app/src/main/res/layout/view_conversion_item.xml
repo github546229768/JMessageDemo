@@ -46,18 +46,18 @@
 
                     <TextView
                         android:id="@+id/textView6"
+                        nickName="@{item.targetInfo}"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:textColor="#000"
-                        nickName="@{item.targetInfo}"
                         android:textSize="18sp" />
 
                     <TextView
                         android:id="@+id/textView7"
+                        text="@{item.latestMessage.content}"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:gravity="center_vertical"
-                        text="@{item.latestMessage.content}" />
+                        android:gravity="center_vertical" />
 
                 </LinearLayout>
 
@@ -79,14 +79,14 @@
                         android:id="@+id/textView9"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center|right"
+                        android:layout_gravity="center|end"
                         android:layout_marginEnd="5dp"
                         android:background="@drawable/message_num"
                         android:backgroundTint="#E11010"
                         android:gravity="center"
                         android:text="@{String.valueOf(item.unReadMsgCnt)}"
                         android:textColor="#fff"
-                        android:visibility="@{item.unReadMsgCnt>1 ? View.VISIBLE :View.GONE}" />
+                        android:visibility="@{item.unReadMsgCnt>0 ? View.VISIBLE :View.GONE}" />
                 </LinearLayout>
             </LinearLayout>
 

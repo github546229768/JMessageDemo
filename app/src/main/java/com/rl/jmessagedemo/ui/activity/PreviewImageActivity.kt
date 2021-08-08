@@ -4,6 +4,7 @@ import android.os.Build
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.util.Log
 import android.view.WindowInsets
 import android.view.WindowManager
 import com.bumptech.glide.Glide
@@ -14,8 +15,11 @@ class PreviewImageActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+
+
         val imgUrl = intent.getStringExtra("imgUrl")
         if (imgUrl.isNullOrEmpty()) finish()
+        Log.i("TAG-------->", "PreviewImageActivity$imgUrl")
 
         @Suppress("DEPRECATION")
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {

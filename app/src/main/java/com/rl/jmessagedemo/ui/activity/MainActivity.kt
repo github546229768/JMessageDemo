@@ -1,8 +1,13 @@
 package com.rl.jmessagedemo.ui.activity
 
+import android.content.BroadcastReceiver
+import android.content.Context
+import android.content.Intent
+import android.content.IntentFilter
 import android.os.Bundle
 import android.view.View
 import android.widget.TextView
+import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
 import androidx.core.view.isVisible
 import androidx.navigation.fragment.NavHostFragment
@@ -12,12 +17,15 @@ import androidx.navigation.ui.setupWithNavController
 import cn.jpush.im.android.api.ContactManager
 import cn.jpush.im.android.api.JMessageClient
 import cn.jpush.im.android.api.event.ContactNotifyEvent
+import cn.jpush.im.android.api.event.MessageEvent
 import cn.jpush.im.api.BasicCallback
 import com.blankj.utilcode.util.ToastUtils
 import com.google.android.material.bottomnavigation.BottomNavigationItemView
 import com.google.android.material.bottomnavigation.BottomNavigationMenuView
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.rl.jmessagedemo.R
+import com.rl.jmessagedemo.constant.MESSAGE_RECEIVER_ACTION_KEY
+import com.rl.jmessagedemo.viewmodel.MainViewModel
 
 
 class MainActivity : BaseActivity() {
@@ -25,28 +33,32 @@ class MainActivity : BaseActivity() {
         findViewById(R.id.nav_view)
     }
     private lateinit var msgNum: TextView
-//    private val messageReceiver = object : BroadcastReceiver() {
-//        override fun onReceive(context: Context?, intent: Intent?) {
-//            if (intent?.action == MESSAGE_RECEIVER_ACTION_KEY) {
-//                msgNum.text = intent.getStringExtra("num")
-//            }
-//        }
-//    }
+    private val viewModel by viewModels<MainViewModel>()
+
+    private val messageReceiver = object : BroadcastReceiver() {
+        override fun onReceive(context: Context?, intent: Intent?) {
+            viewModel.fetchData()
+        }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        JMessageClient.registerEventReceiver(this)
+        registerReceiver(messageReceiver, IntentFilter().apply {
+            addAction(MESSAGE_RECEIVER_ACTION_KEY)
+        })
         initBottomBar()
         initBottomMsgNum()
-        JMessageClient.registerEventReceiver(this)
-//        registerReceiver(messageReceiver, IntentFilter().apply {
-//            addAction(MESSAGE_RECEIVER_ACTION_KEY)
-//        });//注册广播
+        viewModel.msgNumLiveData.observe(this) {
+            msgNum.text = if (it > 99) "99" else "$it"
+            msgNum.isVisible = it != 0
+        }
     }
 
     override fun onDestroy() {
         JMessageClient.unRegisterEventReceiver(this)
-//        unregisterReceiver(messageReceiver);
+        unregisterReceiver(messageReceiver);
         super.onDestroy()
     }
 
@@ -56,9 +68,6 @@ class MainActivity : BaseActivity() {
         val bottomNavigationMenuView = View.inflate(this, R.layout.badge, null)
         (view as BottomNavigationItemView).addView(bottomNavigationMenuView)
         msgNum = bottomNavigationMenuView.findViewById(R.id.msg)
-        val allUnReadMsgCount = JMessageClient.getAllUnReadMsgCount()
-        msgNum.text = if (allUnReadMsgCount > 99) "99" else "$allUnReadMsgCount"
-        msgNum.isVisible = allUnReadMsgCount != 0
     }
 
     private fun initBottomBar() {
@@ -109,5 +118,11 @@ class MainActivity : BaseActivity() {
             else -> {
             }
         }
+    }
+
+    /*在线消息通知事件*/
+    fun onEvent(event: MessageEvent) {
+        ToastUtils.showLong("来消息啦！")
+        viewModel.fetchData()
     }
 }

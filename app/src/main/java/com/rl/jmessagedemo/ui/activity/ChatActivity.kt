@@ -16,12 +16,11 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.blankj.utilcode.util.SPUtils
 import com.blankj.utilcode.util.ToastUtils
 import com.luck.picture.lib.PictureSelector
-import com.luck.picture.lib.config.PictureConfig
-import com.luck.picture.lib.config.PictureMimeType
 import com.rl.jmessagedemo.R
 import com.rl.jmessagedemo.adapter.MessageListAdapter
 import com.rl.jmessagedemo.constant.*
 import com.rl.jmessagedemo.databinding.ActivityChatBinding
+import com.rl.jmessagedemo.extensions.PictureSelectorUtil
 import com.rl.jmessagedemo.extensions.SoftKeyBoardListener
 import com.rl.jmessagedemo.viewmodel.ChatViewModel
 import com.sqk.emojirelease.Emoji
@@ -64,7 +63,6 @@ class ChatActivity : BaseActivity(), FaceFragment.OnEmojiClickListener {
         viewModel.isMessageStatus.observe(this) {
             scrollToBottom()
             mAdapter.notifyItemRemoved(mAdapter.itemCount - 1)
-//            mAdapter.submitList(viewModel.allMessageLiveData.value)
         }
     }
 
@@ -163,25 +161,19 @@ class ChatActivity : BaseActivity(), FaceFragment.OnEmojiClickListener {
             }
             //打开图库
             photo.setOnClickListener {
-                PictureSelector.create(this@ChatActivity)
-                    .openGallery(PictureMimeType.ofImage())
-                    .maxSelectNum(1)
-                    .minSelectNum(1)
-                    .selectionMode(PictureConfig.SINGLE)
-                    .previewImage(true)
-                    .compress(true)
-                    .forResult(REQUEST_CODE_PHOTO)
+                PictureSelectorUtil.openGallerySingle(this@ChatActivity,
+                    isCompress = false,
+                    isCrop = false,
+                    requestCode = REQUEST_CODE_PHOTO
+                )
             }
             //打开相机
             camera.setOnClickListener {
-                PictureSelector.create(this@ChatActivity)
-                    .openCamera(PictureMimeType.ofImage())
-                    .maxSelectNum(1)
-                    .minSelectNum(1)
-                    .selectionMode(PictureConfig.SINGLE)
-                    .previewImage(true)
-                    .compress(true)
-                    .forResult(REQUEST_CODE_PHOTO)
+                PictureSelectorUtil.openCamera(this@ChatActivity,
+                    isCompress = false,
+                    isCrop = false,
+                    requestCode = REQUEST_CODE_PHOTO
+                )
             }
             //打开文件
             file.setOnClickListener {
