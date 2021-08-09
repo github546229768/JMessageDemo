@@ -17,10 +17,6 @@ import com.rl.jmessagedemo.ui.activity.PersonInformActivity
 import com.rl.jmessagedemo.viewmodel.HomeViewModel
 
 class HomeFragment : BaseFragment() {
-    companion object {
-        fun newInstance() = HomeFragment()
-    }
-
     private lateinit var binding: FragmentHomeBinding
 
     private val viewModel by viewModels<HomeViewModel>()
@@ -46,6 +42,9 @@ class HomeFragment : BaseFragment() {
         initView()
         binding.vm = viewModel
         binding.lifecycleOwner = this
+        viewModel.userInfo.observe(viewLifecycleOwner) {
+            viewModel.loadAvatar(it)
+        }
     }
 
     private fun initView() {

@@ -1,5 +1,6 @@
 package com.rl.jmessagedemo.ui.activity
 
+import android.app.ProgressDialog
 import android.content.Context
 import android.os.Bundle
 import androidx.databinding.DataBindingUtil.*
@@ -40,12 +41,15 @@ class LoginActivity : BaseActivity() {
                 ActivityUtils.startActivity(RegisterActivity::class.java)
             }
             button.setOnClickListener {
+                val progressDialog = ProgressDialog(this@LoginActivity)
+                progressDialog.show()
                 val userName = userNameEdit.text.toString()
                 val password = passwordEdit.text.toString()
                 if (userName.isEmpty() || password.isEmpty()) return@setOnClickListener
                 JMessageClient.login(userName, password, object : BasicCallback() {
                     override fun gotResult(p0: Int, p1: String?) {
                         if (p0 == 0) {
+                            progressDialog.dismiss()
                             SPUtils.getInstance(Context.MODE_PRIVATE).put("isLogin", true)
                             finish()
                             ActivityUtils.startActivity(MainActivity::class.java)

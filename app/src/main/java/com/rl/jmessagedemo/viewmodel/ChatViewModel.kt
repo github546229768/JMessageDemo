@@ -9,6 +9,7 @@ import cn.jpush.im.android.api.content.ImageContent
 import cn.jpush.im.android.api.content.TextContent
 import cn.jpush.im.android.api.model.Conversation
 import cn.jpush.im.android.api.model.Message
+import cn.jpush.im.android.api.model.UserInfo
 import cn.jpush.im.api.BasicCallback
 import com.blankj.utilcode.util.ToastUtils
 import com.luck.picture.lib.entity.LocalMedia
@@ -25,9 +26,12 @@ class ChatViewModel(application: Application) : BaseViewModel(application) {
     private val _allMessageLiveData = MutableLiveData<MutableList<Message>>()
     val allMessageLiveData: LiveData<MutableList<Message>> = _allMessageLiveData
 
-    private lateinit var mConversation: Conversation
+    private val _isFriendLiveData = MutableLiveData<Boolean>()
+    val isFriendLiveData: LiveData<Boolean> = _isFriendLiveData
 
+    private lateinit var mConversation: Conversation
     var isMessageStatus = MutableLiveData<Boolean>()
+    var userId: String? = null
 
 
     @Synchronized
@@ -44,6 +48,11 @@ class ChatViewModel(application: Application) : BaseViewModel(application) {
                     mConversation = Conversation.createGroupConversation(userName.toLong())
                     _allMessageLiveData.postValue(mConversation.allMessage)
                 }
+            }
+            if (mConversation.targetInfo is UserInfo) {
+                val userInfo = mConversation.targetInfo as UserInfo
+                _isFriendLiveData.postValue(userInfo.isFriend)
+                userId = userInfo.userName
             }
         }
     }

@@ -4,11 +4,14 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
+import android.content.pm.PackageManager
 import android.os.Bundle
 import android.view.View
 import android.widget.TextView
 import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
@@ -25,6 +28,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationMenuView
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.rl.jmessagedemo.R
 import com.rl.jmessagedemo.constant.MESSAGE_RECEIVER_ACTION_KEY
+import com.rl.jmessagedemo.constant.MY_PERMISSIONS_REQUEST_CODE
 import com.rl.jmessagedemo.viewmodel.MainViewModel
 
 
@@ -41,6 +45,27 @@ class MainActivity : BaseActivity() {
         }
     }
 
+//    override fun onRequestPermissionsResult(
+//        requestCode: Int,
+//        permissions: Array<out String>,
+//        grantResults: IntArray
+//    ) {
+//        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+//        if (MY_PERMISSIONS_REQUEST_CODE == requestCode) {
+//            for (i in grantResults.indices) {
+//                if (grantResults[i] == PackageManager.PERMISSION_DENIED) {
+//                    Toast.makeText(this, "请在设置中打开权限后继续", Toast.LENGTH_SHORT).show()
+//                    val intent = Intent()
+//                    intent.action = Settings.ACTION_APPLICATION_DETAILS_SETTINGS
+//                    val uri: Uri = Uri.fromParts("package", packageName, null)
+//                    intent.data = uri
+//                    Log.i("TAG-------->", "onRequestPermissionsResult: ${permissions[i]}")
+//                    startActivityForResult(intent, 200)
+//                }
+//            }
+//        }
+//    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -54,7 +79,28 @@ class MainActivity : BaseActivity() {
             msgNum.text = if (it > 99) "99" else "$it"
             msgNum.isVisible = it != 0
         }
+        requestPermission()
     }
+
+    private fun requestPermission() {
+        val packageInfo = packageManager.getPackageInfo(packageName, PackageManager.GET_PERMISSIONS)
+        val requestedPermissions = packageInfo.requestedPermissions
+        val mPermissionList = mutableListOf<String>()
+        requestedPermissions.forEach {
+            if (PackageManager.PERMISSION_GRANTED != ContextCompat.checkSelfPermission(this, it)) {
+                mPermissionList.add(it)
+            }
+        }
+        if (mPermissionList.size > 0) {
+            ActivityCompat.requestPermissions(
+                this,
+                mPermissionList.toTypedArray(),
+                MY_PERMISSIONS_REQUEST_CODE
+            )
+        }
+
+    }
+
 
     override fun onDestroy() {
         JMessageClient.unRegisterEventReceiver(this)
@@ -98,6 +144,10 @@ class MainActivity : BaseActivity() {
                             "",
                             object : BasicCallback() {
                                 override fun gotResult(p0: Int, p1: String?) {
+                                    JMessageClient.createSingleTextMessage(
+                                        fromUsername,
+                                        "我们已经成功添加为好友"
+                                    )
                                 }
                             })
                     }

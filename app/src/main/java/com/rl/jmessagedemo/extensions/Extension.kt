@@ -1,6 +1,7 @@
 package com.rl.jmessagedemo.extensions
 
 import android.graphics.Bitmap
+import android.util.Log
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.databinding.BindingAdapter
@@ -29,6 +30,7 @@ import com.sqk.emojirelease.EmojiUtil
 /*加载头像*/
 @BindingAdapter(value = ["loadImageBitmap"])
 fun loadImageBitmap(image: ImageView, bitmap: Bitmap?) {
+    Log.i("TAG-------->", "loadImageBitmap: ${bitmap.toString()}")
     bitmap?.let {
         image.setImageBitmap(it)
     } ?: image.setImageResource(R.mipmap.head_default)

@@ -22,6 +22,7 @@ import com.rl.jmessagedemo.constant.*
 import com.rl.jmessagedemo.databinding.ActivityChatBinding
 import com.rl.jmessagedemo.extensions.PictureSelectorUtil
 import com.rl.jmessagedemo.extensions.SoftKeyBoardListener
+import com.rl.jmessagedemo.viewmodel.AddFriendViewModel
 import com.rl.jmessagedemo.viewmodel.ChatViewModel
 import com.sqk.emojirelease.Emoji
 import com.sqk.emojirelease.FaceFragment
@@ -31,7 +32,8 @@ class ChatActivity : BaseActivity(), FaceFragment.OnEmojiClickListener {
     private val binding: ActivityChatBinding by lazy {
         DataBindingUtil.setContentView(this, R.layout.activity_chat)
     }
-    private val viewModel: ChatViewModel by viewModels()
+    private val viewModel by viewModels<ChatViewModel>()
+    private val addFriendViewModel by viewModels<AddFriendViewModel>()
     private val mAdapter by lazy { MessageListAdapter() }
     private var username = "0" //聊天key   默认为单聊
     private var type = SINGLE_CHAT_TYPE ///聊天类型  默认为单聊
@@ -127,6 +129,16 @@ class ChatActivity : BaseActivity(), FaceFragment.OnEmojiClickListener {
                     performClick()
                     false
                 }
+            }
+            if (type == SINGLE_CHAT_TYPE) {
+                viewModel.isFriendLiveData.observe(this@ChatActivity) {
+                    noFriendLayout.isVisible = !it
+                }
+            }
+            addFriend.setOnClickListener {
+                viewModel.userId?.let { userId -> addFriendViewModel.addFriend(userId) }
+                addFriend.text = "已发送好友请求"
+                it.isClickable = false
             }
             inputMessage.setOnEditorActionListener { _, _, _ ->
                 viewModel.sendMessage(inputMessage.text.toString())
