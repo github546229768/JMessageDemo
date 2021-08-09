@@ -45,26 +45,6 @@ class MainActivity : BaseActivity() {
         }
     }
 
-//    override fun onRequestPermissionsResult(
-//        requestCode: Int,
-//        permissions: Array<out String>,
-//        grantResults: IntArray
-//    ) {
-//        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-//        if (MY_PERMISSIONS_REQUEST_CODE == requestCode) {
-//            for (i in grantResults.indices) {
-//                if (grantResults[i] == PackageManager.PERMISSION_DENIED) {
-//                    Toast.makeText(this, "请在设置中打开权限后继续", Toast.LENGTH_SHORT).show()
-//                    val intent = Intent()
-//                    intent.action = Settings.ACTION_APPLICATION_DETAILS_SETTINGS
-//                    val uri: Uri = Uri.fromParts("package", packageName, null)
-//                    intent.data = uri
-//                    Log.i("TAG-------->", "onRequestPermissionsResult: ${permissions[i]}")
-//                    startActivityForResult(intent, 200)
-//                }
-//            }
-//        }
-//    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

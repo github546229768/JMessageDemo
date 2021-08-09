@@ -4,7 +4,6 @@ import android.annotation.SuppressLint
 import android.app.ActivityOptions
 import android.content.Intent
 import android.text.format.DateUtils
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -36,6 +35,8 @@ class MessageListAdapter : DataBindingListAdapter<Message>(DiffCallback) {
         const val ITEM_TYPE_RECEIVE_MESSAGE = 1 //文本接收试图
         const val ITEM_TYPE_SEND_IMG_MESSAGE = 2 //图片发送试图
         const val ITEM_TYPE_RECEIVE_IMG_MESSAGE = 3 //图片接收试图
+        const val ITEM_TYPE_SEND_VOICE_MESSAGE = 4 //语音发送试图
+        const val ITEM_TYPE_RECEIVE_VOICE_MESSAGE = 5 //语音接收试图
 
         @SuppressLint("SimpleDateFormat")
         @JvmStatic
@@ -84,6 +85,10 @@ class MessageListAdapter : DataBindingListAdapter<Message>(DiffCallback) {
                 if (getItem(position).direct == MessageDirect.send) ITEM_TYPE_SEND_IMG_MESSAGE
                 else ITEM_TYPE_RECEIVE_IMG_MESSAGE
             }
+            ContentType.voice -> {
+                if (getItem(position).direct == MessageDirect.send) ITEM_TYPE_SEND_VOICE_MESSAGE
+                else ITEM_TYPE_RECEIVE_VOICE_MESSAGE
+            }
             else -> {
                 if (getItem(position).direct == MessageDirect.send) ITEM_TYPE_SEND_MESSAGE
                 else ITEM_TYPE_RECEIVE_MESSAGE
@@ -94,6 +99,8 @@ class MessageListAdapter : DataBindingListAdapter<Message>(DiffCallback) {
     private fun getLayoutId2() = R.layout.view_receive_message_item
     private fun getImageSendLayoutId() = R.layout.view_img_send_message_item
     private fun getImageReceiveLayoutId() = R.layout.view_img_receive_message_item
+    private fun getVoiceSendLayoutId() = R.layout.view_voice_send_message_item
+    private fun getVoiceReceiveLayoutId() = R.layout.view_voice_receive_message_item
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
@@ -107,6 +114,10 @@ class MessageListAdapter : DataBindingListAdapter<Message>(DiffCallback) {
                 bindingViewHolder(getImageSendLayoutId(), parent)
             ITEM_TYPE_RECEIVE_IMG_MESSAGE ->
                 bindingViewHolder(getImageReceiveLayoutId(), parent)
+            ITEM_TYPE_SEND_VOICE_MESSAGE ->
+                bindingViewHolder(getVoiceSendLayoutId(), parent)
+            ITEM_TYPE_RECEIVE_VOICE_MESSAGE ->
+                bindingViewHolder(getVoiceReceiveLayoutId(), parent)
             else ->
                 super.onCreateViewHolder(parent, viewType)
         }

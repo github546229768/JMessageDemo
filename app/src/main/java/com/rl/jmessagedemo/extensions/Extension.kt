@@ -6,10 +6,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.databinding.BindingAdapter
 import cn.jpush.im.android.api.callback.GetAvatarBitmapCallback
-import cn.jpush.im.android.api.content.EventNotificationContent
-import cn.jpush.im.android.api.content.ImageContent
-import cn.jpush.im.android.api.content.MessageContent
-import cn.jpush.im.android.api.content.TextContent
+import cn.jpush.im.android.api.content.*
 import cn.jpush.im.android.api.enums.ContentType
 import cn.jpush.im.android.api.model.GroupInfo
 import cn.jpush.im.android.api.model.UserInfo
@@ -88,6 +85,14 @@ fun text(view: TextView, messageContent: MessageContent?) {
         }
         ContentType.image -> {
             view.text = "收到一条图片消息"
+        }
+        ContentType.voice -> {
+            view.apply {
+                text = context.getString(
+                    R.string.voice_message_duration,
+                    (messageContent as VoiceContent).duration
+                )
+            }
         }
         else -> {
             view.text = "非文本消息"

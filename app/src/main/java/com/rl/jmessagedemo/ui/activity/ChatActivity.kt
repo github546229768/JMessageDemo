@@ -12,6 +12,7 @@ import android.view.animation.TranslateAnimation
 import androidx.activity.viewModels
 import androidx.core.view.*
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.blankj.utilcode.util.SPUtils
 import com.blankj.utilcode.util.ToastUtils
@@ -22,10 +23,13 @@ import com.rl.jmessagedemo.constant.*
 import com.rl.jmessagedemo.databinding.ActivityChatBinding
 import com.rl.jmessagedemo.extensions.PictureSelectorUtil
 import com.rl.jmessagedemo.extensions.SoftKeyBoardListener
+import com.rl.jmessagedemo.ui.view.SoundTextView
 import com.rl.jmessagedemo.viewmodel.AddFriendViewModel
 import com.rl.jmessagedemo.viewmodel.ChatViewModel
 import com.sqk.emojirelease.Emoji
 import com.sqk.emojirelease.FaceFragment
+import kotlinx.coroutines.launch
+import java.io.File
 
 
 class ChatActivity : BaseActivity(), FaceFragment.OnEmojiClickListener {
@@ -193,7 +197,13 @@ class ChatActivity : BaseActivity(), FaceFragment.OnEmojiClickListener {
             file.setOnClickListener {
                 ToastUtils.showLong("暂无完善")
             }
-
+            tvSound.setOnMessage(object : SoundTextView.OnMessage {
+                override fun sendVoiceMessage(voiceFile: File, voiceTime: Int) {
+                    lifecycleScope.launch {
+                        viewModel.sendVoiceMessage(voiceFile, voiceTime)
+                    }
+                }
+            })
         }
     }
 

@@ -7,6 +7,7 @@ import androidx.lifecycle.viewModelScope
 import cn.jpush.im.android.api.JMessageClient
 import cn.jpush.im.android.api.content.ImageContent
 import cn.jpush.im.android.api.content.TextContent
+import cn.jpush.im.android.api.content.VoiceContent
 import cn.jpush.im.android.api.model.Conversation
 import cn.jpush.im.android.api.model.Message
 import cn.jpush.im.android.api.model.UserInfo
@@ -59,7 +60,7 @@ class ChatViewModel(application: Application) : BaseViewModel(application) {
 
     fun sendMessage(messageDesc: String) {
         val message = mConversation.createSendMessage(TextContent(messageDesc))
-        _allMessageLiveData.value?.add(message)
+        _allMessageLiveData.value = _allMessageLiveData.value?.apply { add(message) }
         message.setOnSendCompleteCallback(object : BasicCallback() {
             override fun gotResult(responseCode: Int, p1: String?) {
                 if (responseCode == 0) {
@@ -79,7 +80,27 @@ class ChatViewModel(application: Application) : BaseViewModel(application) {
     //图片
     fun sendImageMessage(selectList: MutableList<LocalMedia>) {
         val message = mConversation.createSendMessage(ImageContent(File(getPath(selectList[0]))))
-        _allMessageLiveData.value?.add(message)
+        _allMessageLiveData.value = _allMessageLiveData.value?.apply { add(message) }
+        message.setOnSendCompleteCallback(object : BasicCallback() {
+            override fun gotResult(responseCode: Int, p1: String?) {
+                if (responseCode == 0) {
+                    //消息发送成功
+                    isMessageStatus.value = true
+                    ToastUtils.showLong("消息发送成功")
+                } else {
+                    //消息发送失败
+                    isMessageStatus.value = false
+                    ToastUtils.showLong("消息发送失败$p1")
+                }
+            }
+        })
+        JMessageClient.sendMessage(message)
+    }
+
+    //语音
+    fun sendVoiceMessage(voiceFile: File, voiceTime: Int) {
+        val message = mConversation.createSendMessage(VoiceContent(voiceFile,voiceTime))
+        _allMessageLiveData.value = _allMessageLiveData.value?.apply { add(message) }
         message.setOnSendCompleteCallback(object : BasicCallback() {
             override fun gotResult(responseCode: Int, p1: String?) {
                 if (responseCode == 0) {

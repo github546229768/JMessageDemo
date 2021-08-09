@@ -11,8 +11,8 @@ import kotlinx.coroutines.launch
 
 class NotificationsViewModel(application: Application) : BaseViewModel(application) {
 
-    private val _conversationLiveData = MutableLiveData<List<Conversation>>()
-    val conversationLiveData: LiveData<List<Conversation>> = _conversationLiveData
+    private val _conversationLiveData = MutableLiveData<List<Conversation>?>()
+    val conversationLiveData: LiveData<List<Conversation>?> = _conversationLiveData
 
     init {
         fetchData()

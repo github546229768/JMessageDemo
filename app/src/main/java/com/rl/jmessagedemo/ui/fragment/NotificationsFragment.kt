@@ -4,11 +4,13 @@ import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.*
 import androidx.activity.result.contract.ActivityResultContracts.StartActivityForResult
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import cn.jpush.im.android.api.JMessageClient
 import cn.jpush.im.android.api.event.MessageEvent
 import cn.jpush.im.android.api.model.Message
@@ -56,7 +58,7 @@ class NotificationsFragment : BaseFragment() {
         JMessageClient.registerEventReceiver(this)
         initView()
         viewModel.conversationLiveData.observe(viewLifecycleOwner) {
-            mAdapter.updateList(it.toMutableList())
+            it?.let { data -> mAdapter.updateList(data.toMutableList()) }
         }
     }
 
@@ -93,6 +95,13 @@ class NotificationsFragment : BaseFragment() {
                 adapter = mAdapter
             }
         }
+        mAdapter.registerAdapterDataObserver(object : RecyclerView.AdapterDataObserver(){
+    /*做到这里来了*/
+            override fun onItemRangeChanged(positionStart: Int, itemCount: Int) {
+                super.onItemRangeChanged(positionStart, itemCount)
+                Log.i("TAG-------->", "onItemRangeChanged: $positionStart")
+            }
+        })
     }
 
     /*在线消息通知事件*/

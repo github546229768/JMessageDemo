@@ -12,6 +12,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.recyclerview.widget.RecyclerView
 import cn.jpush.im.android.api.JMessageClient
+import cn.jpush.im.android.api.content.TextContent
 import cn.jpush.im.android.api.enums.ConversationType
 import cn.jpush.im.android.api.model.Conversation
 import cn.jpush.im.android.api.model.GroupInfo
@@ -102,6 +103,7 @@ class ConversationsListAdapter : RecyclerView.Adapter<DataBindingViewHolder<Conv
                     })
                     notifyItemChanged(position)
                 }
+                findViewById<TextView>(R.id.textView7).text = (currentList[position].latestMessage.content as TextContent).text
             }
             findViewById<View>(R.id.toTop).setOnClickListener {
                 Collections.swap(currentList, position, 0)
