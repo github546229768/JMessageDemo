@@ -14,6 +14,7 @@ import com.blankj.utilcode.util.ToastUtils
 import com.luck.picture.lib.entity.LocalMedia
 import com.rl.jmessagedemo.constant.GROUP_CHAT_TYPE
 import com.rl.jmessagedemo.constant.SINGLE_CHAT_TYPE
+import com.rl.jmessagedemo.extensions.PictureSelectorUtil.getPath
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import java.io.File
@@ -68,7 +69,7 @@ class ChatViewModel(application: Application) : BaseViewModel(application) {
 
     //图片
     fun sendImageMessage(selectList: MutableList<LocalMedia>) {
-        val message = mConversation.createSendMessage(ImageContent(File(selectList[0].path)))
+        val message = mConversation.createSendMessage(ImageContent(File(getPath(selectList[0]))))
         _allMessageLiveData.value?.add(message)
         message.setOnSendCompleteCallback(object : BasicCallback() {
             override fun gotResult(responseCode: Int, p1: String?) {

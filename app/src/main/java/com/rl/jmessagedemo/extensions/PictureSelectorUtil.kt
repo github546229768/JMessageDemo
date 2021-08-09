@@ -4,6 +4,7 @@ import android.app.Activity
 import com.luck.picture.lib.PictureSelector
 import com.luck.picture.lib.config.PictureConfig
 import com.luck.picture.lib.config.PictureMimeType
+import com.luck.picture.lib.entity.LocalMedia
 
 object PictureSelectorUtil {
     fun openCamera(activity: Activity?, isCompress: Boolean, isCrop: Boolean, requestCode: Int) {
@@ -44,6 +45,17 @@ object PictureSelectorUtil {
             .isCamera(true)
             .maxSelectNum(maxCount)
             .forResult(requestCode)
+    }
+
+    fun getPath(localMedia: LocalMedia): String {
+        with(localMedia) {
+            return when {
+                isCompressed -> compressPath
+                isCut -> cutPath
+                realPath != null -> realPath
+                else -> path
+            }
+        }
     }
 
 }

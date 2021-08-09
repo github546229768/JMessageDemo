@@ -161,7 +161,8 @@ class ChatActivity : BaseActivity(), FaceFragment.OnEmojiClickListener {
             }
             //打开图库
             photo.setOnClickListener {
-                PictureSelectorUtil.openGallerySingle(this@ChatActivity,
+                PictureSelectorUtil.openGallerySingle(
+                    this@ChatActivity,
                     isCompress = false,
                     isCrop = false,
                     requestCode = REQUEST_CODE_PHOTO
@@ -169,7 +170,8 @@ class ChatActivity : BaseActivity(), FaceFragment.OnEmojiClickListener {
             }
             //打开相机
             camera.setOnClickListener {
-                PictureSelectorUtil.openCamera(this@ChatActivity,
+                PictureSelectorUtil.openCamera(
+                    this@ChatActivity,
                     isCompress = false,
                     isCrop = false,
                     requestCode = REQUEST_CODE_PHOTO
