@@ -84,7 +84,7 @@ class MainActivity : BaseActivity() {
 
     override fun onDestroy() {
         JMessageClient.unRegisterEventReceiver(this)
-        unregisterReceiver(messageReceiver);
+        unregisterReceiver(messageReceiver)
         super.onDestroy()
     }
 

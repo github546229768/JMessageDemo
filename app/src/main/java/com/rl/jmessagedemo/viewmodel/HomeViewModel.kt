@@ -29,7 +29,6 @@ class HomeViewModel(application: Application) : BaseViewModel(application) {
         viewModelScope.launch(Dispatchers.IO) {
             JMessageClient.getMyInfo()?.let {
                 _userInfo.postValue(it)
-                Log.i("TAG-------->", "gotResult: ${it.toString()}")
                 SPUtils.getInstance(Context.MODE_PRIVATE).put("userName", it.userName)
             }
         }

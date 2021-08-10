@@ -163,7 +163,7 @@ class SoundTextView @JvmOverloads constructor(
                     mediaRecorder = MediaRecorder()
                 }
                 mediaRecorder!!.apply {
-                    setAudioSource(MediaRecorder.AudioSource.MIC);// 设置麦克风
+                    setAudioSource(MediaRecorder.AudioSource.MIC)// 设置麦克风
                     setOutputFormat(MediaRecorder.OutputFormat.MPEG_4)
                     setAudioEncoder(MediaRecorder.AudioEncoder.AAC)//设置音频文件的编码：AAC/AMR_NB/AMR_MB/Default 声音的（波形）的采样
                     setOutputFile(voiceFile.absolutePath)

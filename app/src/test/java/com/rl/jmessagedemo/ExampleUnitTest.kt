@@ -1,6 +1,5 @@
 package com.rl.jmessagedemo
 
-import com.rl.jmessagedemo.extensions.ChineseCharToEn
 import org.junit.Assert.assertEquals
 import org.junit.Test
 

@@ -43,7 +43,6 @@ open class BaseActivity : AppCompatActivity() {
                     setNegativeButton("退出登录") { _, _ ->
                         SPUtils.getInstance(Context.MODE_PRIVATE).clear()
                         ActivityUtils.startActivity(LoginActivity::class.java)
-
                     }
                     create()
                 }.show()

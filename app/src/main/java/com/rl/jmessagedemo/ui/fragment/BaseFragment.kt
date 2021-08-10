@@ -11,7 +11,4 @@ import androidx.fragment.app.Fragment
  * @desc:
 
  */
-open class BaseFragment : Fragment() {
-
-
-}
+open class BaseFragment : Fragment() {}

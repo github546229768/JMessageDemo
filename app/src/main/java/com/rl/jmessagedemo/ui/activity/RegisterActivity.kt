@@ -1,7 +1,6 @@
 package com.rl.jmessagedemo.ui.activity
 
 import android.os.Bundle
-import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import cn.jpush.im.android.api.JMessageClient
 import cn.jpush.im.api.BasicCallback

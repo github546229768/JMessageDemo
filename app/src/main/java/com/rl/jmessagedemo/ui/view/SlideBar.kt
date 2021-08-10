@@ -77,12 +77,14 @@ class SlideBar @JvmOverloads constructor(
     }
 
     override fun onTouchEvent(event: MotionEvent?): Boolean {
+        performClick()
         when (event!!.action) {
             MotionEvent.ACTION_DOWN -> {
                 val index = event.y / (height / letter.size)
                 if (index < letter.size && index > 0)
                     onSectionChangeListener?.onSectionChange(letter[index.toInt()])
                 setBackgroundColor(Color.parseColor("#e1e1e1"))
+                alpha = 0.7f
             }
             MotionEvent.ACTION_MOVE -> {
                 val index = event.y / (height / letter.size)
@@ -96,6 +98,10 @@ class SlideBar @JvmOverloads constructor(
             }
         }
         return true
+    }
+
+    override fun performClick(): Boolean {
+        return super.performClick()
     }
 
 }
