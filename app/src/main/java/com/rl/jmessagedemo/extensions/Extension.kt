@@ -29,7 +29,7 @@ import com.sqk.emojirelease.EmojiUtil
 fun loadImageBitmap(image: ImageView, bitmap: Bitmap?) {
     bitmap?.let {
         image.setImageBitmap(it)
-    } ?: image.setImageResource(R.mipmap.head_default)
+    } ?: image.setImageResource(R.drawable.my_avatar)
 }
 
 /*重载*/
@@ -41,9 +41,9 @@ fun loadImageBitmap(image: ImageView, any: Any?) {
                 if (i == 0) {
                     bitmap?.let {
                         image.setImageBitmap(it)
-                    } ?: image.setImageResource(R.mipmap.head_default)
+                    } ?: image.setImageResource(R.drawable.my_avatar)
                 } else
-                    image.setImageResource(R.mipmap.head_default)
+                    image.setImageResource(R.drawable.my_avatar)
             }
         })
     } else if (any is GroupInfo) {
@@ -52,9 +52,9 @@ fun loadImageBitmap(image: ImageView, any: Any?) {
                 if (i == 0) {
                     bitmap?.let {
                         image.setImageBitmap(it)
-                    } ?: image.setImageResource(R.mipmap.head_default)
+                    } ?: image.setImageResource(R.drawable.my_avatar)
                 } else
-                    image.setImageResource(R.mipmap.head_default)
+                    image.setImageResource(R.drawable.my_avatar)
             }
         })
     }

@@ -1,0 +1,16 @@
+<component name="libraryTable">
+  <library name="Gradle: com.lqr.emoji:library:1.0.2@aar">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/48fb47bf9a17b00f0b2091c6602cc0c9/jetified-library-1.0.2/jars/libs/universal-image-loader-1.9.5.jar!/" />
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/48fb47bf9a17b00f0b2091c6602cc0c9/jetified-library-1.0.2/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/48fb47bf9a17b00f0b2091c6602cc0c9/jetified-library-1.0.2/AndroidManifest.xml" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/48fb47bf9a17b00f0b2091c6602cc0c9/jetified-library-1.0.2/res" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.lqr.emoji/library/1.0.2/ad48c14f727b1f7dbcf6187600788bfda3f859ce/library-1.0.2-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.lqr.emoji/library/1.0.2/fe87cf308ae18494eda91d3c0fe9d3113f9cf14/library-1.0.2-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

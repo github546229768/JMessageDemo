@@ -1,10 +1,11 @@
 <component name="libraryTable">
   <library name="Gradle: cn.jiguang.sdk:jmessage:2.9.2@aar">
     <CLASSES>
-      <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/831acab48178c404525a90fae77169cf/jetified-jmessage-2.9.2/AndroidManifest.xml" />
-      <root url="jar://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/831acab48178c404525a90fae77169cf/jetified-jmessage-2.9.2/jars/classes.jar!/" />
       <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/831acab48178c404525a90fae77169cf/jetified-jmessage-2.9.2/res" />
-      <root url="jar://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/831acab48178c404525a90fae77169cf/jetified-jmessage-2.9.2/jars/libs/jmessage-sdk-android-2.9.2.jar!/" />
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/8f708c26995a720b996e41bb146f912d/jetified-jmessage-2.9.2/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/8f708c26995a720b996e41bb146f912d/jetified-jmessage-2.9.2/res" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/8f708c26995a720b996e41bb146f912d/jetified-jmessage-2.9.2/AndroidManifest.xml" />
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/8f708c26995a720b996e41bb146f912d/jetified-jmessage-2.9.2/jars/libs/jmessage-sdk-android-2.9.2.jar!/" />
     </CLASSES>
     <JAVADOC>
       <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/cn.jiguang.sdk/jmessage/2.9.2/99a405a97f110e78644958920513d69ef29c3dfb/jmessage-2.9.2-javadoc.jar!/" />

@@ -1,0 +1,15 @@
+<component name="libraryTable">
+  <library name="Gradle: com.scwang.smart:refresh-header-radar:2.0.1@aar">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/df7eb40d3e424958e604b84d37c504de/jetified-refresh-header-radar-2.0.1/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/df7eb40d3e424958e604b84d37c504de/jetified-refresh-header-radar-2.0.1/res" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/df7eb40d3e424958e604b84d37c504de/jetified-refresh-header-radar-2.0.1/AndroidManifest.xml" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.scwang.smart/refresh-header-radar/2.0.1/221110d93070a4266d69615eaa672b1c8ac00e1d/refresh-header-radar-2.0.1-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.scwang.smart/refresh-header-radar/2.0.1/f2eafde8a465689f6fb05442f03ef011ede41f02/refresh-header-radar-2.0.1-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

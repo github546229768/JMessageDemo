@@ -18,7 +18,7 @@
                                 <PersistentState>
                                   <option name="values">
                                     <map>
-                                      <entry key="url" value="jar:file:/F:/Android%20Studio/plugins/android/lib/android.jar!/images/material/icons/materialicons/emoji_emotions/baseline_emoji_emotions_24.xml" />
+                                      <entry key="url" value="file:/$PROJECT_DIR$/../../Android_Sdk/icons/material/materialicons/person_add_alt_1/baseline_person_add_alt_1_24.xml" />
                                     </map>
                                   </option>
                                 </PersistentState>
@@ -28,7 +28,8 @@
                         </option>
                         <option name="values">
                           <map>
-                            <entry key="outputName" value="ic_baseline_emoji_emotions_24" />
+                            <entry key="color" value="fdfdfd" />
+                            <entry key="outputName" value="ic_baseline_person_add_alt_1_24" />
                             <entry key="sourceFile" value="F:\AndroidStudioProjects\JMessageDemo" />
                           </map>
                         </option>

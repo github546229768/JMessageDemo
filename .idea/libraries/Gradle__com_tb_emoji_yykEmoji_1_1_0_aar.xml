@@ -1,0 +1,15 @@
+<component name="libraryTable">
+  <library name="Gradle: com.tb.emoji:yykEmoji:1.1.0@aar">
+    <CLASSES>
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/ba88b6bf4df074869383d5b5c7b721c1/jetified-yykEmoji-1.1.0/AndroidManifest.xml" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/ba88b6bf4df074869383d5b5c7b721c1/jetified-yykEmoji-1.1.0/res" />
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/ba88b6bf4df074869383d5b5c7b721c1/jetified-yykEmoji-1.1.0/jars/classes.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.tb.emoji/yykEmoji/1.1.0/45fd2f63d500d59a28e6c6c612366d7253b1e411/yykEmoji-1.1.0-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.tb.emoji/yykEmoji/1.1.0/6c77f3fac8747008f88ef560b389df2443f4571b/yykEmoji-1.1.0-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>
