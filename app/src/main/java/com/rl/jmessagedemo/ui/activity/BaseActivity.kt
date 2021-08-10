@@ -1,7 +1,9 @@
 package com.rl.jmessagedemo.ui.activity
 
+import android.app.Dialog
 import android.content.Context
 import android.os.Bundle
+import android.view.View
 import android.view.inputmethod.InputMethodManager
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
@@ -9,6 +11,7 @@ import cn.jpush.im.android.api.JMessageClient
 import cn.jpush.im.android.api.event.LoginStateChangeEvent
 import com.blankj.utilcode.util.ActivityUtils
 import com.blankj.utilcode.util.SPUtils
+import com.rl.jmessagedemo.R
 
 /**
 
@@ -20,14 +23,37 @@ import com.blankj.utilcode.util.SPUtils
 
  */
 open class BaseActivity : AppCompatActivity() {
-     private val inputService by lazy {
+    private val inputService by lazy {
         getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-     }
+    }
+
+    //加载框
+    private val loadDialog by lazy {
+        Dialog(this, R.style.loadDialog).apply {
+            setContentView(View.inflate(context, R.layout.dialog_loading, null))
+        }
+    }
+
+    fun isLoadDialog(isShow: Boolean) {
+        if (isShow) loadDialog.show() else loadDialog.hide()
+        //注意要再Activity销毁之前关闭
+    }
+
+    override fun onDestroy() {
+        if (loadDialog.isShowing)
+            loadDialog.dismiss()
+        super.onDestroy()
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         JMessageClient.registerEventReceiver(this)
     }
+
+    open fun hideSoftKeyboard() {
+        inputService.hideSoftInputFromWindow(currentFocus?.windowToken, 0) //获取当前焦点
+    }
+
 
     //登录状态发生改变
     fun onEvent(event: LoginStateChangeEvent) {
@@ -115,8 +141,5 @@ open class BaseActivity : AppCompatActivity() {
         }
     }
 
-    open fun hideSoftKeyboard(){
-        inputService.hideSoftInputFromWindow(currentFocus?.windowToken, 0) //获取当前焦点
-    }
 
 }

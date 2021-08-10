@@ -4,13 +4,11 @@ import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.*
 import androidx.activity.result.contract.ActivityResultContracts.StartActivityForResult
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import cn.jpush.im.android.api.JMessageClient
 import cn.jpush.im.android.api.event.MessageEvent
 import com.blankj.utilcode.util.SPUtils
@@ -59,6 +57,9 @@ class NotificationsFragment : BaseFragment() {
         viewModel.conversationLiveData.observe(viewLifecycleOwner) {
             it?.let { data -> mAdapter.updateList(data.toMutableList()) }
         }
+        viewModel.loadingEvent.observe(viewLifecycleOwner) {
+            isLoadDialog(it)
+        }
     }
 
     override fun onResume() {
@@ -98,53 +99,19 @@ class NotificationsFragment : BaseFragment() {
                 viewModel.fetchData()
             }
         }
-        mAdapter.registerAdapterDataObserver(object : RecyclerView.AdapterDataObserver(){
-    /*做到这里来了*/
-            override fun onItemRangeChanged(positionStart: Int, itemCount: Int) {
-                super.onItemRangeChanged(positionStart, itemCount)
-                Log.i("TAG-------->", "onItemRangeChanged: $positionStart")
-            }
-        })
+        //功能待定
+//        mAdapter.registerAdapterDataObserver(object : RecyclerView.AdapterDataObserver() {
+//            /*做到这里来了*/
+//            override fun onItemRangeChanged(positionStart: Int, itemCount: Int) {
+//                super.onItemRangeChanged(positionStart, itemCount)
+//                Log.i("TAG-------->", "onItemRangeChanged: $positionStart")
+//            }
+//        })
     }
 
     /*在线消息通知事件*/
     fun onEvent(event: MessageEvent) {
-//        val msg: Message = event.message
         viewModel.fetchData()
-//        when (msg.contentType) {
-//            ContentType.text -> {
-//                val text = (msg.content as TextContent).text
-//                Log.i("TAG-------->", "onEvent: ${text}")
-//            }
-//            ContentType.image -> {
-//                val text = (msg.content as ImageContent).localPath
-//                Log.i("TAG-------->", "onEvent: ${text}")
-//            }
-//            ContentType.voice -> {
-////                val voiceContent = msg.content
-////                voiceContent.localPath //语音文件本地地址
-////                voiceContent.duration //语音文件时长
-//            }
-//            ContentType.eventNotification -> {
-//                //处理事件提醒消息
-//                when ((msg.content as EventNotificationContent).eventNotificationType) {
-//                    EventNotificationType.group_member_added -> {
-//                        //群成员加群事件
-//                    }
-//                    EventNotificationType.group_member_removed -> {
-//                        //群成员被踢事件
-//                    }
-//                    EventNotificationType.group_member_exit -> {
-//                        //群成员退群事件
-//                    }
-//                    EventNotificationType.group_info_updated -> {
-//                        //群信息变更事件
-//                    }
-//                    else -> {}
-//                }
-//            }
-//            else ->{}
-//        }
     }
 
 }

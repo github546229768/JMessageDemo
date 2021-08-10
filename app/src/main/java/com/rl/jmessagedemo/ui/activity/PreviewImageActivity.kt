@@ -3,7 +3,6 @@ package com.rl.jmessagedemo.ui.activity
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
-import android.util.Log
 import android.view.WindowManager
 import com.bumptech.glide.Glide
 import com.luck.picture.lib.photoview.PhotoView
@@ -16,17 +15,10 @@ class PreviewImageActivity : BaseActivity() {
 
         val imgUrl = intent.getStringExtra("imgUrl")
         if (imgUrl.isNullOrEmpty()) finish()
-        Log.i("TAG-------->", "PreviewImageActivity$imgUrl")
-
-//        @Suppress("DEPRECATION")
-//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-//            window.insetsController?.hide(WindowInsets.Type.statusBars())
-//        } else {
         window.setFlags(
             WindowManager.LayoutParams.FLAG_FULLSCREEN,
             WindowManager.LayoutParams.FLAG_FULLSCREEN
         )
-//        }
 
 
         val photoView = PhotoView(this)

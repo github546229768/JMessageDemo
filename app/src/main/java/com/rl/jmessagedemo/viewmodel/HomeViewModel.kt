@@ -3,7 +3,6 @@ package com.rl.jmessagedemo.viewmodel
 import android.app.Application
 import android.content.Context
 import android.graphics.Bitmap
-import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import cn.jpush.im.android.api.JMessageClient
@@ -40,8 +39,6 @@ class HomeViewModel(application: Application) : BaseViewModel(application) {
                 override fun gotResult(p0: Int, p1: String?, p2: Bitmap?) {
                     if (p0 == 0)
                         _avatar.postValue(p2)
-                    Log.i("TAG-------->", "gotResult: userInfo$userInfo")
-                    Log.i("TAG-------->", "gotResult: p1$p1")
                 }
             })
         }
