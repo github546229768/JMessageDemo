@@ -27,6 +27,7 @@ import com.sqk.emojirelease.EmojiUtil
 /*加载头像*/
 @BindingAdapter(value = ["loadImageBitmap"])
 fun loadImageBitmap(image: ImageView, bitmap: Bitmap?) {
+    Log.i("TAG-------->", "loadImageBitmap: ${bitmap.toString()}")
     bitmap?.let {
         image.setImageBitmap(it)
     } ?: image.setImageResource(R.drawable.my_avatar)
