@@ -11,6 +11,7 @@ import com.rl.jmessagedemo.adapter.ContactListAdapter
 import com.rl.jmessagedemo.databinding.FragmentDashboardBinding
 import com.rl.jmessagedemo.ui.activity.AddFriendActivity
 import com.rl.jmessagedemo.ui.activity.GroupActivity
+import com.rl.jmessagedemo.ui.view.SlideBar
 import com.rl.jmessagedemo.viewmodel.DashboardViewModel
 
 class DashboardFragment : BaseFragment() {
@@ -39,7 +40,7 @@ class DashboardFragment : BaseFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         initView()
-        viewModel.friendListLiveData.observe(viewLifecycleOwner){
+        viewModel.friendListLiveData.observe(viewLifecycleOwner) {
             mAdapter.submitList(it)
         }
     }
@@ -55,6 +56,21 @@ class DashboardFragment : BaseFragment() {
         return super.onOptionsItemSelected(item)
     }
 
+    //方法一
+//    private fun getPosition(firstLetter: String) =
+//        mAdapter.currentList.binarySearch {
+//            it.firstLetter!!.toUpperCase().minus(firstLetter.first())
+//        }
+    //方法二
+    private fun getPosition(firstLetter: String): Int {
+        mAdapter.currentList.forEachIndexed { index, myUserInfo ->
+            if (myUserInfo.firstLetter!!.toUpperCase() == firstLetter.first()) {
+                return index
+            }
+        }
+        return -1
+    }
+
     private fun initView() {
         setHasOptionsMenu(true)
         with(binding) {
@@ -66,7 +82,21 @@ class DashboardFragment : BaseFragment() {
             layoutGroup.setOnClickListener {
                 ActivityUtils.startActivity(GroupActivity::class.java)
             }
-        }
+            slideBar.addOnSectionChangeListener(object : SlideBar.OnSectionChangeListener {
+                override fun onSectionChange(firstLetter: String) {
+                    textView.text = firstLetter
+                    textView.visibility = View.VISIBLE
+                    val position = getPosition(firstLetter)
+                    if (position >= 0) {
+                        val linearLayoutManager = recyclerview.layoutManager as LinearLayoutManager
+                        linearLayoutManager.scrollToPositionWithOffset(position, 0)
+                    }
+                }
 
+                override fun onFinishChange() {
+                    textView.visibility = View.GONE
+                }
+            })
+        }
     }
 }

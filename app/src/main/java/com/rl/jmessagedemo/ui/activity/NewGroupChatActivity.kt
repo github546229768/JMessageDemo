@@ -36,7 +36,7 @@ class NewGroupChatActivity : BaseActivity() {
         viewModel.friendListLiveData.observe(this) {
             val list = mutableListOf<NewGroupBean>()
             it.forEach { dataBean ->
-                list.add(NewGroupBean(dataBean))
+                list.add(NewGroupBean(dataBean.userInfo))
             }
             mAdapter.submitList(list)
         }

@@ -11,6 +11,7 @@ import android.view.View
 import android.widget.Chronometer
 import android.widget.TextView
 import androidx.appcompat.widget.AppCompatTextView
+import com.blankj.utilcode.util.LogUtils
 import com.blankj.utilcode.util.ToastUtils
 import com.rl.jmessagedemo.R
 import kotlinx.coroutines.CoroutineScope
@@ -19,6 +20,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.io.File
 import java.io.FileInputStream
+import java.io.IOException
 
 
 /**
@@ -48,7 +50,7 @@ class SoundTextView @JvmOverloads constructor(
     private lateinit var status: TextView
     private lateinit var chronometer: Chronometer
     private var currentTimeMillis = 0L
-    private lateinit var mediaRecorder: MediaRecorder
+    private var mediaRecorder: MediaRecorder? = null
     private lateinit var voiceFile: File
     private var onMessage: OnMessage? = null
 
@@ -73,12 +75,7 @@ class SoundTextView @JvmOverloads constructor(
         }
     }
 
-    override fun performClick(): Boolean {
-        return super.performClick()
-    }
-
     override fun onTouchEvent(event: MotionEvent?): Boolean {
-        performClick()
         event?.apply {
             when (action) {
                 MotionEvent.ACTION_DOWN -> {
@@ -139,8 +136,17 @@ class SoundTextView @JvmOverloads constructor(
     }
 
     private fun releaseRecorder() {
-        mediaRecorder.stop()
-        mediaRecorder.release()
+        mediaRecorder?.apply {
+            try {
+                stop()
+                release()
+            } catch (e: Exception) {
+                LogUtils.e("releaseRecorder: 出错了${e}")
+                reset()
+                release()
+            }
+        }
+        mediaRecorder = null
     }
 
     private fun startRecording() {
@@ -149,19 +155,26 @@ class SoundTextView @JvmOverloads constructor(
         dirFile.mkdir()
 //        val filePath = "${dirFilePath}/${System.currentTimeMillis()}.amr"//内部
         val filePath = "${dirFilePath}/${System.currentTimeMillis()}.wav"//内部
+//        val filePath = "${dirFilePath}/${System.currentTimeMillis()}.m4a"//内部
         voiceFile = File(filePath)
-        CoroutineScope(Dispatchers.Main).launch {
-            withContext(Dispatchers.IO) {
-                mediaRecorder = MediaRecorder().apply {
-                    setAudioSource(MediaRecorder.AudioSource.MIC)
-                    setOutputFormat(MediaRecorder.OutputFormat.DEFAULT)
-                    setAudioEncoder(MediaRecorder.AudioEncoder.DEFAULT)
+        try {
+            CoroutineScope(Dispatchers.IO).launch {
+                if (mediaRecorder == null) {
+                    mediaRecorder = MediaRecorder()
+                }
+                mediaRecorder!!.apply {
+                    setAudioSource(MediaRecorder.AudioSource.MIC);// 设置麦克风
+                    setOutputFormat(MediaRecorder.OutputFormat.MPEG_4)
+                    setAudioEncoder(MediaRecorder.AudioEncoder.AAC)//设置音频文件的编码：AAC/AMR_NB/AMR_MB/Default 声音的（波形）的采样
                     setOutputFile(voiceFile.absolutePath)
-                    voiceFile.createNewFile()
                     prepare()
                     start()
                 }
             }
+        } catch (e: IllegalStateException) {
+            LogUtils.e("call startAmr(File mRecAudioFile) failed!: 出错了${e.message}")
+        } catch (e: IOException) {
+            LogUtils.e("call startAmr(File mRecAudioFile) failed!${e.message}")
         }
     }
 

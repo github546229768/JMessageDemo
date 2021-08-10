@@ -12,8 +12,6 @@ import cn.jpush.im.api.BasicCallback
 import com.bigkoo.pickerview.builder.OptionsPickerBuilder
 import com.blankj.utilcode.util.ToastUtils
 import com.luck.picture.lib.PictureSelector
-import com.luck.picture.lib.config.PictureConfig
-import com.luck.picture.lib.config.PictureMimeType
 import com.rl.jmessagedemo.R
 import com.rl.jmessagedemo.constant.REQUEST_CODE_PHOTO
 import com.rl.jmessagedemo.databinding.ActivityPersonInformBinding
@@ -35,6 +33,11 @@ class PersonInformActivity : BaseActivity() {
         DataBindingUtil.setContentView(this, R.layout.activity_person_inform)
     }
     private val viewModel by viewModels<PersonInfoViewModel>()
+
+    override fun onSupportNavigateUp(): Boolean {
+        finish()
+        return super.onSupportNavigateUp()
+    }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
@@ -63,6 +66,7 @@ class PersonInformActivity : BaseActivity() {
     }
 
     private fun initView() {
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
         with(binding) {
             layoutHead.setOnClickListener {
                 PictureSelectorUtil.openGallerySingle(

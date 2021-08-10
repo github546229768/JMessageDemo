@@ -5,7 +5,7 @@
     <data>
         <variable
             name="item"
-            type="cn.jpush.im.android.api.model.UserInfo" />
+            type="com.rl.jmessagedemo.emp.MyUserInfo" />
 
     </data>
 
@@ -35,13 +35,13 @@
                 <de.hdodenhof.circleimageview.CircleImageView
                     android:id="@+id/imageView2"
                     style="@style/avatarStyle"
-                    loadImageBitmap="@{item}"
+                    loadImageBitmap="@{item.userInfo}"
                     android:layout_margin="10dp"
                     app:srcCompat="@mipmap/head_default" />
 
                 <TextView
                     android:id="@+id/userNmae"
-                    nickName="@{item}"
+                    nickName="@{item.userInfo}"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"

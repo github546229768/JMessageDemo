@@ -3,7 +3,10 @@ package com.rl.jmessagedemo.adapter
 import android.annotation.SuppressLint
 import android.app.ActivityOptions
 import android.content.Intent
+import android.graphics.drawable.AnimationDrawable
+import android.media.MediaPlayer
 import android.text.format.DateUtils
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -16,6 +19,7 @@ import androidx.databinding.BindingAdapter
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.DiffUtil
 import cn.jpush.im.android.api.content.ImageContent
+import cn.jpush.im.android.api.content.VoiceContent
 import cn.jpush.im.android.api.enums.ContentType
 import cn.jpush.im.android.api.enums.MessageDirect
 import cn.jpush.im.android.api.enums.MessageStatus
@@ -25,6 +29,7 @@ import com.rl.jmessagedemo.R
 import com.rl.jmessagedemo.databinding.DataBindingListAdapter
 import com.rl.jmessagedemo.databinding.DataBindingViewHolder
 import com.rl.jmessagedemo.ui.activity.PreviewImageActivity
+import java.io.File
 import java.text.SimpleDateFormat
 import kotlin.math.absoluteValue
 
@@ -75,6 +80,8 @@ class MessageListAdapter : DataBindingListAdapter<Message>(DiffCallback) {
         }
     }
 
+    private var mediaPlayer: MediaPlayer? = null
+
     override fun getItemViewType(position: Int) =
         when (getItem(position).content.contentType) {
             ContentType.text -> {
@@ -124,7 +131,10 @@ class MessageListAdapter : DataBindingListAdapter<Message>(DiffCallback) {
     }
 
     //绑定DataBindingViewHolder
-    private fun bindingViewHolder(@LayoutRes layoutId: Int, parent: ViewGroup): DataBindingViewHolder<Message> =
+    private fun bindingViewHolder(
+        @LayoutRes layoutId: Int,
+        parent: ViewGroup
+    ): DataBindingViewHolder<Message> =
         DataBindingViewHolder(
             DataBindingUtil.inflate(
                 LayoutInflater.from(parent.context),
@@ -164,6 +174,40 @@ class MessageListAdapter : DataBindingListAdapter<Message>(DiffCallback) {
                     )
                 }
             }
+            if (holder.itemViewType == ITEM_TYPE_SEND_VOICE_MESSAGE
+                || holder.itemViewType == ITEM_TYPE_RECEIVE_VOICE_MESSAGE
+            ) {
+                val view: ViewGroup = findViewById(R.id.voice)
+                val imgVoice: ImageView = findViewById(R.id.imgVoice)
+                view.setOnClickListener {
+                    val voiceContent = getItem(position).content as VoiceContent
+                    val animatedImageDrawable = imgVoice.drawable as AnimationDrawable
+                    playAudioFile(File(voiceContent.localPath), animatedImageDrawable)
+                }
+            }
+        }
+    }
+
+    private fun playAudioFile(file: File, animatedImageDrawable: AnimationDrawable) {
+        animatedImageDrawable.start()
+        try {
+            mediaPlayer = MediaPlayer()
+            mediaPlayer!!.apply {
+                isLooping = false
+                setDataSource(file.absolutePath)
+                prepare()
+                start()
+                setOnCompletionListener { mp ->
+                    mp.release()
+                    animatedImageDrawable.stop()
+                }
+                setOnErrorListener { _, i, i1 ->
+                    Log.i("TAG-------->", "Play local sound onError: $i, $i1")
+                    true
+                }
+            }
+        } catch (e: java.lang.Exception) {
+            Log.i("TAG-------->", "playAudioFile: ", e)
         }
     }
 

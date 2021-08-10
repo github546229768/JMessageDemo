@@ -224,8 +224,8 @@ class ChatActivity : BaseActivity(), FaceFragment.OnEmojiClickListener {
             showAnim.duration = 300
             showLayout.startAnimation(showAnim)
             showLayout.isVisible = true
-            tvSound.visibility = View.VISIBLE
-            inputMessage.visibility = View.VISIBLE
+            tvSound.isVisible = false
+            inputMessage.isVisible = true
             ivSound.setImageResource(R.mipmap.sound_record)
             showSound = false
             scrollToBottom()
