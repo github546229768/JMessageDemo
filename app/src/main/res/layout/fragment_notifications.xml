@@ -11,32 +11,32 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-                    <com.scwang.smart.refresh.layout.SmartRefreshLayout
-                        android:id="@+id/smartRefreshLayout"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintHorizontal_bias="0.5"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent">
+                <!--    <com.scwang.smart.refresh.layout.SmartRefreshLayout-->
+                <!--        android:id="@+id/smartrefresh"-->
+                <!--        android:layout_width="match_parent"-->
+                <!--        android:layout_height="match_parent"-->
+                <!--        app:layout_constraintBottom_toBottomOf="parent"-->
+                <!--        app:layout_constraintEnd_toEndOf="parent"-->
+                <!--        app:layout_constraintHorizontal_bias="0.5"-->
+                <!--        app:layout_constraintStart_toStartOf="parent"-->
+                <!--        app:layout_constraintTop_toTopOf="parent">-->
 
-                        <com.scwang.smart.refresh.header.BezierRadarHeader
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content" />
+                <!--        <com.scwang.smart.refresh.header.BezierRadarHeader-->
+                <!--            android:layout_width="match_parent"-->
+                <!--            android:layout_height="wrap_content" />-->
 
-                        <androidx.recyclerview.widget.RecyclerView
-                            android:id="@+id/recyclerview"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintHorizontal_bias="0.5"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent"
-                            tools:listitem="@layout/view_conversion_item"
-                            tools:visibility="visible" />
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recyclerview"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:listitem="@layout/view_conversion_item"
+                    tools:visibility="visible" />
 
-                    </com.scwang.smart.refresh.layout.SmartRefreshLayout>
+                <!--    </com.scwang.smart.refresh.layout.SmartRefreshLayout>-->
         </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

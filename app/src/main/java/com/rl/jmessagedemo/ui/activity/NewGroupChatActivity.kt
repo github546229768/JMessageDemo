@@ -1,7 +1,6 @@
 package com.rl.jmessagedemo.ui.activity
 
 import android.app.Activity
-import android.os.Build
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.databinding.DataBindingUtil
@@ -28,9 +27,6 @@ class NewGroupChatActivity : BaseActivity() {
     private val mAdapter by lazy {
         NewGroupChatAdapter()
     }
-    private val alreadyList by lazy {
-        intent.extras?.getSerializable("alreadyList") as ArrayList<*>
-    }
     private var type = NEW_GROUP    //默认当前页面是新建群聊
     private var groupId = 0L    //默认当前页面是新建群聊
 
@@ -42,23 +38,14 @@ class NewGroupChatActivity : BaseActivity() {
             it.forEach { dataBean ->
                 list.add(NewGroupBean(dataBean.userInfo))
             }
-            if (intent.extras != null)
-                alreadyList.forEach {
-                    //系统版本小于24则不会隐藏已有的群成员       这里偷个懒！！！
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                        list.removeIf { dateBean -> dateBean.userInfo.userID == it }
-                    }
-                }
             mAdapter.submitList(list)
         }
 
     }
 
     private fun initView() {
-        intent.extras?.let {
-            type = it.getInt(TYPE, NEW_GROUP)
-            groupId = it.getLong(DATA, 0L)
-        }
+        type = intent.getIntExtra(TYPE, NEW_GROUP)
+        groupId = intent.getLongExtra(DATA, 0L)
         with(binding) {
             recyclerView.apply {
                 setHasFixedSize(true)

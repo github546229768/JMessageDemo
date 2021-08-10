@@ -64,7 +64,7 @@ class ConversationsListAdapter : RecyclerView.Adapter<DataBindingViewHolder<Conv
     override fun onBindViewHolder(holder: DataBindingViewHolder<Conversation>, position: Int) {
         holder.bind(currentList[position])
         with(holder.itemView) {
-            findViewById<View>(R.id.layoutItem).setOnClickListener {
+            findViewById<View>(R.id.layout_item).setOnClickListener {
                 var key = ""
                 var type = 0
                 var title = ""
