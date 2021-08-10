@@ -59,7 +59,9 @@
                 android:layout_height="70dp"
                 android:layout_marginStart="8dp"
                 android:gravity="center_vertical"
-                android:text="群聊"
+                android:text="我的群聊"
+                android:textColor="#000"
+                android:textSize="16sp"
                 app:layout_constraintStart_toEndOf="@+id/imageView2"
                 app:layout_constraintTop_toTopOf="parent" />
         </androidx.constraintlayout.widget.ConstraintLayout>

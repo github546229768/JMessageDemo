@@ -104,8 +104,11 @@ class ChatActivity : BaseActivity(), FaceFragment.OnEmojiClickListener {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if (item.itemId == R.id.add) {
             Intent(this@ChatActivity, ChatDetailActivity::class.java).apply {
-                putExtra("type", type)
-                putExtra("username", username)
+                val bundle = Bundle().apply {
+                    putString("type", type)
+                    putLong("groupId", username.toLong())
+                }
+                putExtras(bundle)
                 startActivity(this)
             }
         }

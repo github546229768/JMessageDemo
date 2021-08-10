@@ -56,7 +56,6 @@
                 android:id="@+id/addFriend"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:drawableStart="@drawable/ic_baseline_person_add_24"
                 android:gravity="center"
                 android:text="加为好友"
                 android:textSize="16sp"
@@ -66,7 +65,8 @@
                 app:layout_constraintStart_toEndOf="@+id/textView13"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:layout_conversion_absoluteHeight="24dp"
-                tools:layout_conversion_absoluteWidth="206dp" />
+                tools:layout_conversion_absoluteWidth="206dp"
+                app:drawableStartCompat="@drawable/ic_baseline_person_add_alt_1_24" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <FrameLayout

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
@@ -37,15 +38,19 @@
                     style="@style/avatarStyle"
                     loadImageBitmap="@{item.userInfo}"
                     android:layout_margin="10dp"
-                    app:srcCompat="@mipmap/head_default" />
+                    app:srcCompat="@mipmap/head_default"
+                    tools:srcCompat="@tools:sample/avatars" />
 
                 <TextView
                     android:id="@+id/userNmae"
                     nickName="@{item.userInfo}"
                     android:layout_width="0dp"
+                    android:text="Jack"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:gravity="center_vertical" />
+                    android:gravity="center_vertical"
+                    android:textColor="#000"
+                    android:textSize="16sp" />
             </LinearLayout>
         </LinearLayout>
     </androidx.cardview.widget.CardView>

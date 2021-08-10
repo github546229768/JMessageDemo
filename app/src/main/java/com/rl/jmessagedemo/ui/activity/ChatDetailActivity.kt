@@ -39,7 +39,7 @@ class ChatDetailActivity : BaseActivity() {
         ChatDetailAdapter()
     }
     private val groupId by lazy {
-        intent.getStringExtra("username")!!.toLong()
+        intent.extras!!.getLong("groupId")
     }
 
     private var resultLauncher =
@@ -83,10 +83,19 @@ class ChatDetailActivity : BaseActivity() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         mAdapter.setOnFootItemClickListener(object : ChatDetailAdapter.OnItemClickListener {
             override fun onItemClick(view: View, position: Int) {
+                val currentListId = mutableListOf<Long>()
+                mAdapter.currentList.forEach {
+                    if (it != null)
+                        currentListId.add(it.uid)
+                }
                 if (position == mAdapter.currentList.size - 1) {
                     Intent(this@ChatDetailActivity, NewGroupChatActivity::class.java).apply {
-                        putExtra(TYPE, GROUP_ADD)
-                        putExtra(DATA, groupId)
+                        val bundle = Bundle().apply {
+                            putInt(TYPE, GROUP_ADD)
+                            putLong(DATA, groupId)
+                            putSerializable("alreadyList", ArrayList(currentListId))
+                        }
+                        putExtras(bundle)
                         resultLauncher.launch(this)
                     }
                 }

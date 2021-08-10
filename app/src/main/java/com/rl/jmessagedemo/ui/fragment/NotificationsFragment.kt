@@ -13,7 +13,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import cn.jpush.im.android.api.JMessageClient
 import cn.jpush.im.android.api.event.MessageEvent
-import cn.jpush.im.android.api.model.Message
 import com.blankj.utilcode.util.SPUtils
 import com.rl.jmessagedemo.R
 import com.rl.jmessagedemo.adapter.ConversationsListAdapter
@@ -94,6 +93,10 @@ class NotificationsFragment : BaseFragment() {
                 layoutManager = LinearLayoutManager(context)
                 adapter = mAdapter
             }
+            smartRefreshLayout.setOnRefreshListener {
+                it.finishRefresh(1000)
+                viewModel.fetchData()
+            }
         }
         mAdapter.registerAdapterDataObserver(object : RecyclerView.AdapterDataObserver(){
     /*做到这里来了*/
@@ -106,7 +109,7 @@ class NotificationsFragment : BaseFragment() {
 
     /*在线消息通知事件*/
     fun onEvent(event: MessageEvent) {
-        val msg: Message = event.message
+//        val msg: Message = event.message
         viewModel.fetchData()
 //        when (msg.contentType) {
 //            ContentType.text -> {
