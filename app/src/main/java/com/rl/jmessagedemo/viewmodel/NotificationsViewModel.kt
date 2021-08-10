@@ -20,8 +20,12 @@ class NotificationsViewModel(application: Application) : BaseViewModel(applicati
 
     @Synchronized
     fun fetchData() {
-        viewModelScope.launch (Dispatchers.IO){
-            _conversationLiveData.postValue(JMessageClient.getConversationList())
+        loadingEvent.value = true
+        viewModelScope.launch(Dispatchers.IO) {
+            JMessageClient.getConversationList()?.let {
+                _conversationLiveData.postValue(it)
+                loadingEvent.postValue(false)
+            }
         }
     }
 

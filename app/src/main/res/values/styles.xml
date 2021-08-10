@@ -22,4 +22,23 @@
         <item name="android:windowBackground">@drawable/round_background</item>
     </style>
 
+
+    //加载框
+    <style name="loadDialog" parent="AlertDialog.AppCompat.Light">
+        <item name="android:windowFrame">@null</item>
+        <!--边框-->
+        <item name="android:windowIsFloating">true</item>
+        <!--是否浮现在activity之上-->
+        <item name="android:windowIsTranslucent">false</item>
+        <!--无标题-->
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <!--背景透明-->
+        <item name="android:backgroundDimEnabled">false</item>
+        <!--模糊-->
+        <item name="android:background">#00ffffff</item>
+        <!-- 设置自定义布局的背景透明 -->
+        <item name="android:windowEnterAnimation">@null</item>
+        <item name="android:windowExitAnimation">@null</item>
+    </style>
+
 </resources>
