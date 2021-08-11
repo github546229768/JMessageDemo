@@ -1,7 +1,6 @@
 package com.rl.jmessagedemo.extensions
 
 import android.graphics.Bitmap
-import android.util.Log
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.databinding.BindingAdapter

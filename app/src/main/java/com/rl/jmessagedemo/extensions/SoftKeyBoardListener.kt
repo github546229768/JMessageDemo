@@ -22,7 +22,7 @@ class SoftKeyBoardListener(activity: Activity) {
 
     private val rootView = activity.window.decorView
     //activity的根视图
-    var rootViewVisibleHeight = 0
+    private var rootViewVisibleHeight = 0
     private var onSoftKeyBoardChangeListener: OnSoftKeyBoardChangeListener? = null
     private fun setOnSoftKeyBoardChangeListener(onSoftKeyBoardChangeListener: OnSoftKeyBoardChangeListener) {
         this.onSoftKeyBoardChangeListener = onSoftKeyBoardChangeListener

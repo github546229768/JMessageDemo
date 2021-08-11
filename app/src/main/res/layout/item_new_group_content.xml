@@ -42,7 +42,7 @@
             android:layout_marginStart="16dp"
             nickName="@{item.userInfo}"
             android:textColor="#ff000000"
-            android:textSize="14dp"
+            android:textSize="14sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@+id/iv"
             app:layout_constraintTop_toTopOf="parent" />

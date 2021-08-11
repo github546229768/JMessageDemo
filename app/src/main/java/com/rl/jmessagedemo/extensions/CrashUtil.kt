@@ -41,6 +41,9 @@ object CrashUtil {
 //            val filePath = getExternalFilesDir(null)?.absolutePath + File.separator + "errorLog.txt"//外部
             val filePath = context.filesDir.absolutePath + "/errorLog.txt"//内部
 
+
+//            val file = File(context.filesDir, "picFromCamera") //在sd卡目录下新建picFromCamera目录
+
             Log.i("TAG-------->", "initCrash: $filePath")
 
             File(filePath).appendText(errorLog) //覆盖原先的文本内容
