@@ -31,10 +31,6 @@ class LoginActivity : BaseActivity() {
     }
 
     private fun initView() {
-        if (SPUtils.getInstance(Context.MODE_PRIVATE).getBoolean("isLogin", false)) {
-            finish()
-            ActivityUtils.startActivity(MainActivity::class.java)
-        }
         with(binding) {
             register.setOnClickListener {
                 ActivityUtils.startActivity(RegisterActivity::class.java)

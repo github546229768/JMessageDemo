@@ -2,23 +2,24 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="com.rl.jmessagedemo">
-    
-    <uses-permission android:name="android.permission.WAKE_LOCK"/>
-    <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"
+
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission
+        android:name="android.permission.WRITE_EXTERNAL_STORAGE"
         tools:ignore="ScopedStorage" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
 
     <application
         android:name=".App"
         android:allowBackup="true"
-        tools:replace="android:theme"
         android:icon="@mipmap/head_default"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.MaterialComponents.Light.DarkActionBar">
+        android:theme="@style/Theme.MaterialComponents.Light.DarkActionBar"
+        tools:replace="android:theme">
 
         <!--        &lt;!&ndash; Since JCore2.0.0 Required SDK核心功能&ndash;&gt;-->
         <!--        &lt;!&ndash; 这个Service要继承JCommonService &ndash;&gt;-->
@@ -34,23 +35,41 @@
         <service
             android:name="cn.jpush.android.service.PushService"
             android:process=":multiprocess"
-            tools:node="replace"/>
+            tools:node="replace" />
 
-        <activity android:name=".ui.activity.MainActivity" />
-        <activity android:name=".ui.activity.RegisterActivity" android:label="注册"/>
-        <activity android:name=".ui.activity.LoginActivity" android:label="登录">
+        <activity android:name=".ui.activity.SplashActivity"
+            android:theme="@style/Theme.AppCompat.NoActionBar" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ui.activity.AddFriendActivity" android:label="添加好友"/>
-        <activity android:name=".ui.activity.ChatActivity" android:windowSoftInputMode="adjustResize"/>
-        <activity android:name=".ui.activity.NewGroupChatActivity" android:label="群聊" />
-        <activity android:name=".ui.activity.ChatDetailActivity" android:label="聊天详情" />
-        <activity android:name=".ui.activity.PersonInformActivity" android:label="个人资料"/>
-        <activity android:name=".ui.activity.GroupActivity" android:label="我的群聊"/>
+        <activity android:name=".ui.activity.MainActivity" />
+        <activity
+            android:name=".ui.activity.RegisterActivity"
+            android:label="注册" />
+        <activity
+            android:name=".ui.activity.LoginActivity"
+            android:label="登录"/>
+        <activity
+            android:name=".ui.activity.AddFriendActivity"
+            android:label="添加好友" />
+        <activity
+            android:name=".ui.activity.ChatActivity"
+            android:windowSoftInputMode="adjustResize" />
+        <activity
+            android:name=".ui.activity.NewGroupChatActivity"
+            android:label="群聊" />
+        <activity
+            android:name=".ui.activity.ChatDetailActivity"
+            android:label="聊天详情" />
+        <activity
+            android:name=".ui.activity.PersonInformActivity"
+            android:label="个人资料" />
+        <activity
+            android:name=".ui.activity.GroupActivity"
+            android:label="我的群聊" />
         <activity
             android:name=".ui.activity.PreviewImageActivity"
             android:theme="@style/Theme.AppCompat.NoActionBar" />

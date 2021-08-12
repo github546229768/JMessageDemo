@@ -36,6 +36,9 @@ class MainActivity : BaseActivity() {
     private val navView: BottomNavigationView by lazy {
         findViewById(R.id.nav_view)
     }
+//    private val navigationView: BottomNavigationView by lazy {
+//        findViewById(R.id.navigationView)
+//    }
     private lateinit var msgNum: TextView
     private val viewModel by viewModels<MainViewModel>()
 
@@ -55,11 +58,15 @@ class MainActivity : BaseActivity() {
         })
         initBottomBar()
         initBottomMsgNum()
+        initSidewall()
         viewModel.msgNumLiveData.observe(this) {
             msgNum.text = if (it > 99) "99" else "$it"
             msgNum.isVisible = it != 0
         }
         requestPermission()
+    }
+
+    private fun initSidewall() {
     }
 
     private fun requestPermission() {
